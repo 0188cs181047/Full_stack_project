@@ -1,0 +1,15 @@
+{% extends "hiring/home.html" %}
+{% block img %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">  
+  <div class="mdc-card py-2">
+  <h2>Edit File</h2>
+  <form method="post" enctype="multipart/form-data">
+  Job_ID : {{file.job_id}}
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-primary" style="background-color: #7a00ff;">Update</button>
+  </form>
+  <br><br>
+  </div>
+  </div>
+{% endblock img %}

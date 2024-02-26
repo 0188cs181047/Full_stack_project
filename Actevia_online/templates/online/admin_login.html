@@ -1,0 +1,77 @@
+{% extends 'online/home.html' %}
+
+{% block title %}
+<title>Admin Login</title>
+{% endblock title %}
+
+
+
+{% block header %}
+{% include "online/navbar.html" %}
+{% endblock header %}
+<style>
+    #student {
+        padding: 10px;
+        /* background-color: #212529; */
+        margin: 10px;
+    }
+</style>
+
+
+
+{% block body %}
+<div class="container-fluid" id="student" style="font-weight: bold;">
+    <br><br>
+
+
+    <div class="container shadow-sm p-3 mb-5 bg-body rounded" id="form" style="height: auto; width: 50%;">
+        <center>
+            <h3 style="font-weight: bold;">Admin SignIn</h3>
+            {% if error_message %}
+            <div style="font-weight: bold; color: red" class="error-message">{{ error_message }}</div>
+            {% endif %}
+            <hr>
+        </center>
+        <br>
+
+
+        <form method="post" class="box">
+            {% csrf_token %}
+
+
+            <div class="mb-3">
+                <label for="user" class="form-label">Username</label>
+                <input type="text" class="form-control" id="user" placeholder="Username" name="username">
+            </div>
+
+            <div class="mb-3">
+                <label for="Password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="Password" name="pass" placeholder="Password">
+            </div>
+            <br>
+
+
+            <button type="submit" class="btn btn-success btn-lg">SignIn</button>
+            <!-- <input type="button" value=""> -->
+            <!-- <div class="social">
+              <div class="go"><i class="fab fa-google"></i>  Google</div>
+              <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
+            </div> -->
+            {% comment %} <a href="/student/student_signup">Create a account</a> {% endcomment %}
+        </form>
+    </div>
+
+</div>
+
+
+{% endblock body %}
+
+
+{% block contact %}
+{% endblock contact %}
+{% block other %}
+{% endblock other %}
+<br><br><br><br><br>
+{% block footer %}
+{% include "online/footer.html" %}
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'policy/base.html' %}
+
+{% block policy %}
+<head>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js"></script>
+
+    <style>
+        #pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2 " style="background-color: #7a00ff; color: white;">
+        <div class="d-flex justify-content-between align-items-center" >
+            <h4 class="card-title mb-0" > {{ policy.policy_name }} <span style="color: blue; "></span></h4>
+            
+            <div class="text-start">
+                {% if user.is_authenticated %}  
+                <div class="container-fluid">
+                    {% if uploads %}
+                        {% for upload in uploads %}
+                        <a href="{{ upload.file.url }}" download="{{ upload.file.name }}" target="_blank" >
+                            <button type="button" class="btn btn-outline-light" >Download</button>
+                        </a>
+                        {% endfor %}
+                    {% else %}
+                        <p>No files uploaded for this policy.</p>
+                    {% endif %}
+                </div>
+          
+            {% endif %}
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <br>
+  <div class="mdc-card">
+    <div class="card-body mb-0">
+        <blockquote class="blockquote mb-0">
+                        {% if uploads %}
+    {% for upload in policy.upload_files.all %}
+        <div id="pdf-viewer-{{ upload.id }}"></div>
+        <script>
+            var url = '{{ upload.file.url }}';
+            var pdfjsLib = window['pdfjs-dist/build/pdf'];
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
+            var loadingTask = pdfjsLib.getDocument(url);
+            loadingTask.promise.then(function(pdf) {
+                console.log('PDF loaded');
+                var numPages = pdf.numPages;
+                console.log(numPages);
+                var scale = 1.3;
+                var renderPage = function(pageNumber) {
+                    pdf.getPage(pageNumber).then(function(page)
+
+                 {
+                        console.log('Page ' + pageNumber + ' loaded');
+                        var viewport = page.getViewport({ scale: scale });
+                        var canvas = document.createElement('canvas');
+                        var context = canvas.getContext('2d');
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+                        page.render({ canvasContext: context, viewport: viewport, }).promise.then(function() {
+                            console.log('Page ' + pageNumber + ' rendered');
+                            canvas.style.borderBottom = "3px solid black"; // Add black border
+                            document.getElementById('pdf-viewer-{{ upload.id }}').appendChild(canvas);
+                            if (pageNumber < numPages) {
+                                renderPage(pageNumber + 1);
+                            }
+                        });
+                    });
+                };
+                renderPage(1);
+            }, function(reason) {
+                console.error(reason);
+            });
+        </script>
+    {% endfor %}
+{% else %}
+    <p>No files uploaded for this policy.</p>
+{% endif %}
+            </blockquote>
+     
+    </div>
+  </div>
+  <br><br>
+  </div>
+
+  <script>
+    const downloadLinks = document.querySelectorAll('a[href$=".pdf"][download]');
+    downloadLinks.forEach(link => {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            const fileUrl = link.getAttribute('href');
+            const fileName = link.getAttribute('download');
+            fetch(fileUrl)
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            });
+        });
+    });
+    </script>
+{% endblock %}

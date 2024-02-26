@@ -1,0 +1,43 @@
+{% extends 'post/home.html' %}
+{% block body %}
+
+
+
+<h1>Comments for {{ video_post.title }}</h1>
+{% for comment in comments %}
+    <div class="comment">
+        <p>{{ comment.user }} - {{ comment.timestamp }}</p>
+        <p>{{ comment.content }}</p>
+        
+        
+
+        <a href="{% url 'delete_comment' pk=comment.pk %}">Delete comment</a>
+
+        <form method="POST" action="{% url 'reply_comment' pk=comment.pk %}">
+            {% csrf_token %}
+            <textarea name="text" placeholder="Write a reply..."></textarea>
+            <button type="submit">Reply</button>
+        </form>
+
+        {% for reply in comment.replies.all %}
+            <div class="reply">
+                <p>{{ reply.text }}</p>
+                <small>Posted by {{ reply.author }} on {{ reply.created_date }}</small>
+            </div>
+           
+            
+        {% endfor %}
+    </div>
+{% empty %}
+    <p>No comments yet.</p>
+
+{% endfor %}
+<hr>
+
+
+
+
+
+
+
+{% endblock body %}

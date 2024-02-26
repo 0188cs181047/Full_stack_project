@@ -1,0 +1,25 @@
+{% extends 'leave/base.html' %}
+
+{% block leave %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Update Employee</h4>
+        </div>
+    </div>
+</div>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="mdc-card__content">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="btn-group" role="group" aria-label="Third group">
+                    <button type="submit" class="btn btn-success">Update</button>
+                  </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

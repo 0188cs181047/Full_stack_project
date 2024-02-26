@@ -1,0 +1,39 @@
+{% extends 'home.html' %}
+
+{% block policy %}
+<br><br>
+<div class="container">
+  {% if policies %}
+    <form method="POST" action="{% url 'policy_delete' %}">
+      {% csrf_token %}
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            {% comment %} <th>Serial No</th> {% endcomment %}
+            <th></th>
+            <th>Policy Name</th>
+            <!-- <th>Actions</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          {% for policy in policies %}
+            <tr>
+              <td style="text-align: center;"><input type="checkbox"  name="selected_policies" value="{{ policy.pk }}"></td>
+              {% comment %} <td>{{ forloop.counter }}</td> {% endcomment %}
+              <td><a href="/policy_files/{{policy.pk}}"><button type="button" class="btn btn-outline-dark">{{ policy.policy_name }}</button></a></td></em>
+              <!-- <td>
+                <a href="{% url 'policy_edit' pk=policy.pk %}"><button type="button" class="btn btn-outline-dark">Edit</button></a>
+              </td> -->
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button type="submit" class="btn btn-outline-danger" onclick="if(document.querySelectorAll('input[type=checkbox]:checked').length === 0) {alert('Please select at least one policy to delete.'); return false;} else {return confirm('Are you sure you want to delete the selected policies?');}">Delete Selected Policies</button>
+      {% comment %} <a href="{% url 'policy_new' %}"><button type="button" class="btn btn-outline-success">Add Policy</button></a> {% endcomment %}
+    </form>
+  {% else %}
+    <h4>No policies found.</h4>
+    {% comment %} <a href="{% url 'policy_new' %}"><button type="button" class="btn btn-outline-success">Add Policy</button></a> {% endcomment %}
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+
+{% block policy %}
+<div class="container">
+  <br>
+  
+  <div class="card">
+    <div class="card-header" style="text-align: center; font-weight: bold; background-color: whitesmoke;">
+     <em>New Policy</em> 
+    </div>
+    <div class="card-body">
+     
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+      
+      
+        {{ form.policy_name }}
+        <br><br>
+        {{ form.upload_files }}
+        <br><br>
+        <button type="submit" class="btn btn-outline-dark">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+  
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'leave/base.html' %}
+
+{% block leave %}
+
+<style>
+    .leave-type {
+        color: blue;
+    }
+
+    .work-from-home {
+        color: green;
+    }
+</style>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Hii.. <span
+                    style="color: rgb(60, 20, 98); font-weight: bold;">{{username}}</span> ,It's Your Leave History</h4>
+
+            <div class="text-start">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="table-responsive">
+
+            <table class="table">
+                <colgroup>
+
+                    {% if request.user.is_superuser or request.user.is_staff %}
+                    <col width="15%">
+                    {% endif %}
+
+                    <col width="30%">
+                    <col width="10%">
+                    <col width="20%">
+                    <col width="25%">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        {% if request.user.is_superuser or request.user.is_staff %}
+                        <th class="text-center py-1">Employee Name</th>
+                        {% endif %}
+                        <th class="text-center py-1">Leave Reason</th>
+                        <th class="text-center py-1">Start Date</th>
+                        <th class="text-center py-1">End Date</th>
+                        <th class="text-center py-1">Leave Type / Work from Home</th>
+                        <th class="text-center py-1">Approval</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for l in leave %}
+                    <tr>
+
+                        {% if request.user.is_superuser or request.user.is_staff %}
+                        <td class="text-center py-1">{{ l.employee.employee_name }}</td>
+                        <!-- Add employee name column for superusers/staff -->
+                        {% endif %}
+                        <td class="text-center py-1">{{ l.leave_reason }}</td>
+                        <td class="text-center py-1">{{ l.start_date }}</td>
+                        <td class="text-center py-1">{{ l.end_date }}</td>
+                        <td class="text-center py-1">
+                            {% if l.leave_type %}
+                            <span class="leave-type">{{ l.get_leave_type_display }}</span>
+                            {% else %}
+                            {% if l.work_from_home %}
+                            <span class="work-from-home">Work from Home</span>
+                            {% endif %}
+                            {% endif %}
+                        </td>
+                        {% if l.approved %}
+                        <td class="text-center py-1 bg-success text-white">
+
+                            Approved
+                        </td>
+                        {% else %}
+                        <td class="text-center py-1 bg-danger text-white">
+                        Rejected
+
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+{% block ScriptBlock %}
+
+{% endblock %}
+
+
+{% endblock %}

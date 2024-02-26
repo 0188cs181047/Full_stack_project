@@ -1,0 +1,210 @@
+{% extends 'leave/base.html' %}
+
+{% block leave %}
+
+<style>
+    .leave-type {
+        color: blue; 
+    }
+
+    .work-from-home {
+        color: green; 
+    }
+
+  
+
+
+</style>
+
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Welcome, {{ username }}!</h4>
+
+            <div class="text-start">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% if employee_leaves %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Employee Leave Applications</h4>
+            <div class="text-start"></div>
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <colgroup>
+                    <col width="40%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="10%">
+                    <col width="15%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="text-center py-1">Leave Reason</th>
+                        <th class="text-center py-1">Start Date</th>
+                        <th class="text-center py-1">End Date</th>
+                        <th class="text-center py-1">Status</th>
+                        <th class="text-center py-1">Rejection Reason</th>
+                        <th class="text-center py-1">Cancellation Status</th>
+                        <th class="text-center py-1">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for leave in employee_leaves %}
+                    <tr>
+                        <td class="text-center py-1">{{ leave.leave_reason }}</td>
+                        <td class="text-center py-1">{{ leave.start_date }}</td>
+                        <td class="text-center py-1">{{ leave.end_date }}</td>
+                        <td class="text-center py-1 {% if leave.status == 'Pending' %}bg-primary text-white{% elif leave.status == 'Approved' %}bg-success text-white{% elif leave.status == 'Rejected' %}bg-danger text-white{% endif %}">
+                            {{ leave.status }}
+                        </td>
+                        <td class="text-center py-1">
+                            {% if leave.status == 'Pending' %}
+                                N/A
+                            {% elif leave.status == 'Rejected' %}
+                                {{ leave.rejection_reason }}
+                            {% else %}
+                                ---------
+                            {% endif %}
+                        </td>
+                        <td class="text-center py-1 {% if leave.approved is None %}canceled{% endif %}">
+                            {% if leave.approved is None %}
+                                Canceled
+                            {% else %}
+                                Active
+                            {% endif %}
+                        </td>
+                        <td class="text-center py-1">
+                            {% if leave.status == 'Pending' %}
+                                <form method="POST" action="{% url 'leave_approval' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="leave_id" value="{{ leave.pk }}">
+                                    <input type="hidden" name="action" value="cancel">
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        &#x2716; Cancel
+                                    </button>
+                                </form>
+                            {% elif leave.status == 'Approved' %}
+                                {% if leave.approved %}
+                                    <form method="POST" action="{% url 'leave_approval' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="leave_id" value="{{ leave.pk }}">
+                                        <input type="hidden" name="action" value="cancel">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            &#x2716; Cancel
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+
+{% if manager_leaves %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Manager Leave Applications</h4>
+
+            <div class="text-start">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="table-responsive">
+
+            <table class="table table-bordered">
+                <colgroup>
+
+                    <col width="10%">
+                    <col width="40%">
+                    <col width="15%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="15%">
+                </colgroup>
+                <thead>
+                    <tr>
+
+                        <th class="text-center py-1">Employee</th>
+                        <th class="text-center py-1">Leave Reason</th>
+                        <th class="text-center py-1">Leave Type</th>
+                        <th class="text-center py-1">Start Date</th>
+                        <th class="text-center py-1">End Date</th>
+                        <th class="text-center py-1">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for leave in manager_leaves %}
+                    <tr>
+                        <td class="text-center py-1">{{ leave.employee.employee_name }}</td>
+                        <td class="text-center py-1" >{{ leave.leave_reason }}</td>
+                        <td class="text-center py-1">
+                            {% if leave.leave_type %}
+                                <span class="leave-type">{{ leave.get_leave_type_display }}</span>
+                            {% else %}
+                                {% if leave.work_from_home %}
+                                    <span class="work-from-home">Work from Home</span>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td class="text-center py-1" >{{ leave.start_date }}</td>
+                        <td class="text-center py-1" >{{ leave.end_date }}</td>
+                        <td class="text-center py-1" >
+                            {% if leave.status == "Pending" %}
+                            <form method="POST" action="{% url 'leave_approval' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="leave_id" value="{{ leave.pk }}">
+                                <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">
+                                    &#x2713; Approve
+                                </button>
+                                <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">
+                                    &#x2717; Reject
+                                </button>
+                            </form>
+                            
+                              {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+{% block ScriptBlock %}
+{% endblock %}
+
+
+{% endblock %}

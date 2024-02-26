@@ -1,0 +1,110 @@
+{% extends 'leave/base.html' %}
+
+{% block leave %}
+
+
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Managers  List</h4>
+            
+            <div class="text-start">
+              
+               
+                <a href="{% url 'manager_form'%}">
+                <div class="text-start">
+                    
+                    <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="create_new">
+                        <i class="material-icons mdc-button__icon">add</i><span> Add New Manager</span>
+                    </button>
+                
+                </div>
+            </a>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="table-responsive">
+            <form action="{% url 'delete_selected_managers' %}" method="post" id="delete_form">
+                {% csrf_token %}
+            <table class="table">
+                <colgroup>
+                    <col width="5%">
+                    <col width="25%">
+                    <col width="30%">
+                    <col width="30%">
+                    <col width="10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="text-center py-1"><input type="checkbox" id="select_all"></th>
+                        <th class="text-center py-1">Manager ID</th>
+                        <th class="text-center py-1">Manager Name</th>
+                        <th class="text-center py-1">Manager Email</th>
+                        <th class="text-center py-1">Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in manager %}
+                    <tr>
+                        <td class="text-center py-1">
+                            <input type="checkbox" name="selected_items" value="{{ m.id }}">
+                        </td>
+                        <td class="text-center py-1">{{ m.manager_id }}</td>
+                        <td class="text-center py-1">{{ m.manager_name }}</td>
+                        <td class="text-center py-1">{{ m.manager_email }}</td>
+                        <td class="text-center py-1">
+                        <a href="{% url 'update_manager' m.pk%}">
+                            <i class="material-icons">create</i> 
+                        </a>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+                <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="delete_selected">
+                    <i class="material-icons mdc-button__icon">delete</i><span> Delete Selected</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% block ScriptBlock %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#select_all').change(function() {
+            $('input[name="selected_items"]').prop('checked', $(this).is(':checked'));
+        });
+
+        $('#delete_selected').click(function() {
+            var selectedIds = [];
+
+            $('input[name="selected_items"]:checked').each(function() {
+                selectedIds.push($(this).val());
+            });
+
+            if (selectedIds.length > 0) {
+                // Perform the delete action or send the selectedIds to the server for deletion
+                console.log(selectedIds);
+            } else {
+                alert("Please select at least one item to delete.");
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}
+
+
+{% endblock %}

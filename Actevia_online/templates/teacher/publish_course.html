@@ -1,0 +1,83 @@
+{% comment %} {% extends 'teacher/teacher_base.html' %} {% endcomment %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <style media="screen">
+    a:link {
+      text-decoration: none;
+    }
+
+    h6 {
+      text-align: center;
+      color:white
+    }
+    #back_link {
+  color: white;
+  text-decoration: none;
+  float:right;
+  text-align: justify
+}
+
+    .row {
+      margin: 100px;
+    }
+  </style>
+</head>
+<br><br>
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h6 class="panel-title">Publish Course</h6>
+        <div class="panel panel-primary">
+        <div class="panel-heading">
+        <div class="panel-title">
+        {% comment %} <a href="/teacher/teacher_logout" id="logout_link" class="logout_btn" style="border-radius:0px;">Back</a>  {% endcomment %}
+        <a href="{% url 'go_back1' %}" id="back_link" class="back_btn" style="border-radius:0px;">Back</a>
+        </div>
+        </div>
+        </div>
+    </div> 
+  </div>  
+
+        {% comment %} <tr>
+
+          <th>Course</th>
+          <th>Total Question</th>
+          <th>Total Marks</th> 
+          <th>Action</th>{% endcomment %}
+    
+<form action="/teacher/publish_course/" method="post">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="student">Select a student:</label>
+    <select class="form-control" id="student" name="student_id">
+      {% for student in students %}
+      <option value="{{ student.id }}">{{ student.user }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="course">Select a Course to publish:</label>
+    <select class="form-control" id="course" name="course_id">
+      {% for course in courses %}
+      <option value="{{ course.id }}">{{ course.course_name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  {% comment %} <div class="form-group">
+  <label for="expiration_hours">Expiration Hours:</label>
+  <input type="number" id="expiration_hours" name="expiration_hours" min="1">
+</div> {% endcomment %}
+  <button type="submit" class="btn btn-primary">Publish</button>
+</form>
+
+  
+</div>
+
+<br><br><br><br><br><br>
+{% endblock content %}

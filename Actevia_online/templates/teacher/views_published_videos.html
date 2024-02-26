@@ -1,0 +1,71 @@
+{% extends 'teacher/teacher_base.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <style media="screen">
+    a:link {
+      text-decoration: none;
+    }
+
+    h6 {
+      text-align: center;
+      color:white
+    }
+    #back_link {
+  color: white;
+  text-decoration: none;
+  float:right;
+  text-align: justify
+}
+
+    .row {
+      margin: 100px;
+    }
+  </style>
+</head>
+<br><br>
+{% comment %} <div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h6 class="panel-title">Published Videos</h6>
+        <div class="panel panel-primary">
+        <div class="panel-heading">
+        
+        </div>
+        </div>
+    </div> 
+  </div>  
+
+
+  {% if request.user.is_authenticated %}
+  {% with request.user.student as current_student %}
+    {% if current_student %}
+      {% with current_student.user.username as current_student_name %}
+        <a href="/student/published_videos/{{ current_student.id }}">{{ current_student_name }}</a><br>
+      {% endwith %}
+    {% endif %}
+  {% endwith %}
+{% endif %} {% endcomment %}
+
+
+<h1>Published Videos by {{ student.name }}</h1>
+{% if videos %}
+  <ul>
+    {% for video in videos %}
+      <li>
+        <a href="{{ video.video_file.url }}">{{ video.title }}</a>
+        <p>{{ video.description }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No published videos found.</p>
+{% endif %}
+
+<br><br><br><br><br><br>
+{% endblock content %}

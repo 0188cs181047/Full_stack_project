@@ -1,0 +1,26 @@
+{% extends 'fixed/home.html' %}
+{% block img %}
+ 
+<form method="get">
+    {{ form.as_p }}
+    <button type="submit">Apply Filter</button>
+</form>
+
+
+{% if asset %}
+    <ul>
+    {% for asset in asset %}
+        <li>Asset ID: {{ asset.asset_id }}</li>
+        <li>Email:{{ asset.email}}</li>
+        <li>Asset Owner: {{ asset.asset_owner }}</li>
+        <li>Asset Type: {{ asset.asset_type }}</li>
+        <li>Asset Date: {{ asset.Asset_date }}</li>
+        <!-- Display other fields as needed -->
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
+
+
+{% endblock img %}

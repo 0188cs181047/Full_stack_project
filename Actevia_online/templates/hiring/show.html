@@ -1,0 +1,169 @@
+ {% extends "hiring/base.html" %} 
+ {% block img %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+
+  
+  <div class="mdc-card py-2">
+      <div class="d-flex justify-content-between align-items-center">
+          <h4 class="card-title mb-0">Recruitment Details</h4>
+          
+          <div class="text-start">
+              {% comment %} {% if request.user.is_authenticated %} {% endcomment %}
+              {% if user.is_staff or user.is_superuser %}
+              <a href="/hiring/recruiter">
+                <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="create_new"><i class="material-icons mdc-button__icon">add</i><span> Add New Record</span></button>
+              </a>&nbsp;
+             
+              
+              {% else %}
+              {% comment %} <a href="/cridential/login"><button type="button" class="btn btn-outline-success">Please Login</button></a> {% endcomment %}
+              {% endif %}
+          </div>
+          
+          
+      </div>
+  </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">  
+  <div class="mdc-card py-2" style="font-size: 12px;">
+      <div class="d-flex justify-content-between align-items-center">                 
+          <div class="text-start">
+            <form method="POST">
+              {% csrf_token %}
+              {{filters.form}}
+              &nbsp;
+              <input type="submit" value="Filter" class="btn btn-primary btn-sm" style="background-color: #7a00ff;">
+            </form>
+          </div>                  
+      </div>
+  </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+      <form method="get">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <colgroup>
+                    <col width="7%">
+                    <col width="8%">
+                    <col width="11%">
+                    <col width="5%">
+                    <col width="40%">
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="5%">
+                    <col width="4%">
+                    <col width="5%">
+                </colgroup>
+                <thead >
+                    
+                    <tr>
+                  <th class="text-center py-1">Company Name</th>
+                  <th class="text-center py-1">Job ID</th>
+                  <th class="text-center py-1">Position</th>
+                  <th class="text-center py-1">Open Positions</th>
+                  <th class="text-center py-1">Job Description</th>
+                  <th class="text-center py-1">Remaining Positions</th>
+                  <th class="text-center py-1">Date</th>
+                  <th class="text-center py-1">Priority</th>
+                  <th class="text-center py-1">Status</th>
+                  {% if request.user.is_authenticated %}
+                  <th class="text-center py-1">Actions</th>
+                  {% endif %}
+                </tr>
+
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                     <tr>
+              <td class="px-2 py-1 text-center">{{ employee.companyname }}</td>
+              <td class="px-2 py-1 text-center">{{ employee.job_id }}</td>
+              <td class="px-2 py-1 text-center">{{ employee.Position }}</td>
+              <td class="px-2 py-1 text-center">{{ employee.resourcerequired }}</td>
+              <td class="px-2 py-1 text-center" style="white-space: pre;">{{ employee.jd }}</td>
+              <td class="px-2 py-1 text-center">{{ employee.resourceremaining }}</td>
+              <td class="px-2 py-1 text-center">{{ employee.date_created }}</td>
+              <td class="px-2 py-1 text-center">{{ employee.Priority }}</td>
+              <td class="px-2 py-1 text-center">{{ employee.r_status }}</td>
+              <td class="px-2 py-1 text-center">
+                {% if request.user.is_authenticated %}
+                <a href="/hiring/update1/{{ employee.id }}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-fill"></i> Edit</a>
+                <a href="/hiring/delete1/{{ employee.id }}" class="btn btn-sm btn-danger"><i class="bi bi-trash-fill"></i> Delete</a>
+                {% endif %}
+              </td>
+            </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination justify-content-center">
+          <span class="step-links">
+            {% if employees.has_previous %}
+            <button style="background-color: #7a00ff;"><a href="?page=1" style="color: white;">&laquo; First</a></button>
+            <button style="background-color: #7a00ff;"><a href="?page={{ employees.previous_page_number }}" style="color: white;">Previous</a></button>
+            {% endif %}
+
+            <span class="current-page">
+              Page {{ employees.number }} of {{ employees.paginator.num_pages }}.
+            </span>
+        
+            {% if employees.has_next %}
+            <button style="background-color: #7a00ff;"><a href="?page={{ employees.next_page_number }}" style="color: white;">Next</a></button>
+            <button style="background-color: #7a00ff;"><a href="?page={{ employees.paginator.num_pages }}" style="color: white;">Last &raquo;</a></button>
+            {% endif %}
+          </span>
+        </div>
+      </form>
+    </div>
+</div>
+{% endblock img %} 
+
+
+
+{% block ScriptBlock %}
+
+
+
+
+<script>
+    $(function() {
+        $('#create_new').click(function() {
+            uni_modal("Add New Department", "{% url 'manage_departments-page' %}")
+        })
+        $('.edit-data').click(function() {
+            uni_modal("Edit Department", "{% url 'manage_departments-page' %}?id=" + $(this).attr('data-id'))
+        })
+        $('.delete-data').click(function() {
+            _conf("Are you sure to delete this department?", "delete_department", [$(this).attr('data-id')])
+        })
+    })
+
+    function delete_department($id) {
+        start_loader();
+        $.ajax({
+            headers: {
+                "X-CSRFToken": '{{csrf_token}}'
+            },
+            url: "{% url 'delete-department' %}",
+            method: "POST",
+            data: {
+                id: $id
+            },
+            dataType: "json",
+            error: err => {
+                console.log(err)
+                alert_toast("An error occured.", 'error');
+                end_loader();
+            },
+            success: function(resp) {
+                if (typeof resp == 'object' && resp.status == 'success') {
+                    location.reload();
+                } else {
+                    alert_toast("An error occured.", 'error');
+                    end_loader();
+                }
+            }
+        })
+    }
+</script>
+{% endblock ScriptBlock %}

@@ -1,0 +1,234 @@
+{% extends 'hiring/home.html' %}
+
+{% comment %} {% block img %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <div class="mdc-card">
+    <h2>View Files</h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{file_filter.form}}
+
+      <input type="submit" value="show" name="">
+    </form>
+    <form method="post" action="{% url 'share_files' %}">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Job ID</th>
+            <th>File</th>
+            <th>Candidate Name</th>
+            <th>Contact</th>
+            <th>Experience</th>
+            <th>Owner Name</th>
+            <th>Date</th>
+            <th>L1</th>
+            <th>L2</th>
+            <th>L3</th>
+            <th>Status</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for file in files %}
+          <tr>
+            <td><input type="checkbox" name="selected_files" value="{{ file.id }}"></td>
+            <td>{{ file.job_id }}</td>
+            <td><a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a></td>
+            <td>{{ file.candidate_name }}</td>
+            <td>{{ file.contact }}</td>
+            <td>{{ file.experience }}</td>
+            <td>{{ file.owner_name }}</td>
+            <td>{{ file.date_created }}</td>
+            <td>{{ file.l1 }}</td>
+            <td>{{ file.l2 }}</td>
+            <td>{{ file.l3 }}</td>
+            <td>{{ file.status }}</td>
+            <td><a href="{% url 'edit_file' file.id %}">Edit</a></td>
+            <td><a href="{% url 'delete_file' file.id %}">Delete</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" name="email" class="form-control" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Share</button>
+    </form>
+
+    <script>
+      const selectAll = document.getElementById('select-all');
+      const checkboxes = document.getElementsByName('selected_files');
+
+      selectAll.addEventListener('click', () => {
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = selectAll.checked;
+        });
+      });
+    </script>
+
+    {% if success_popup %}
+    <script>
+      alert('Files sent successfully.');
+    </script>
+    {% endif %}
+
+    {% if error_popup %}
+    <script>
+      alert('Please select at least one file to send email.');
+    </script>
+    {% endif %}
+
+    <br><br><br>
+    {% endblock img %} {% endcomment %}
+
+
+    {% block img %}
+
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+      <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+          <h4 class="card-title mb-0;">View Files</h4>
+          <div class="text-start">
+            {% if request.user.is_authenticated %}
+            <a href="">
+              {% comment %} <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="create_new"><i
+                  class="material-icons mdc-button__icon">add</i><span> Add New Record</span></button> {% endcomment %}
+            </a>&nbsp;
+            {% else %}
+            <a href="/cridential/login"><button type="button" class="btn btn-outline-success">Please Login</button></a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+      <div class="mdc-card py-2" style="font-size: 12px;">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="text-start">
+            <form method="POST">
+              {% csrf_token %}
+              {{file_filter.form}}
+              &nbsp;
+              <input type="submit" value="Filter" class="btn btn-primary btn-sm" style="background-color: #7a00ff;">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+        <div class="mdc-card">
+    <form method="post" action="{% url 'share_files' %}">
+      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+        <div class="mdc-card py-2" style="font-size: 12px;">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="text-start">
+              <label for="email">Email:</label>
+              <input type="email" name="email" required>&nbsp
+              <button type="submit" class="btn btn-primary btn-sm" style="background-color: #7a00ff;">Share</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+          
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered">
+                <colgroup>
+                  <col width="5%">
+                  <col width="5%">
+                  <col width="26%">
+                  <col width="5%">
+                  <col width="5%">
+                  <col width="5%">
+                  <col width="5%">
+                  <col width="5%">
+                  <col width="8%">
+                  <col width="8%">
+                  <col width="8%">
+                  <col width="5%">
+                  <col width="5%">
+                  <col width="5%">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th class="text-center py-1">Select</th>
+                    <th class="text-center py-1">Job ID</th>
+                    <th class="text-center py-1">File</th>
+                    <th class="text-center py-1">Candidate Name</th>
+                    <th class="text-center py-1">Contact</th>
+                    <th class="text-center py-1">Experience</th>
+                    <th class="text-center py-1">Owner Name</th>
+                    <th class="text-center py-1">Date</th>
+                    <th class="text-center py-1">L1</th>
+                    <th class="text-center py-1">L2</th>
+                    <th class="text-center py-1">L3</th>
+                    <th class="text-center py-1">Status</th>
+                    {% if request.user.is_authenticated %}
+                    <th class="text-center py-1">Edit</th>
+                    <th class="text-center py-1">Delete</th>
+                    {% endif %}
+                  </tr>
+
+                </thead>
+                <tbody>
+                  {% for file in files %}
+                  <tr>
+                    <td class="px-2 py-1 text-center"><input type="checkbox" name="selected_files"
+                        value="{{ file.id }}"></td>
+                    <td class="px-2 py-1 text-center">{{ file.job_id }}</td>
+                    <td class="px-2 py-1 text-center"><a href="{{ file.file.url }}" target="_blank">{{ file.file.name}}</a></td>
+                    <td class="px-2 py-1 text-center">{{ file.candidate_name }}</td>
+                    <td class="px-2 py-1 text-center">{{ file.contact }}</td>
+                    <td class="px-2 py-1 text-center">{{ file.experience }}</td>
+                    <td class="px-2 py-1 text-center">{{ file.owner_name }}</td>
+                    <td class="px-2 py-1 text-center">{{ file.date_created }}</td>
+                    <td class="px-2 py-1 text-center">{{ file.l1 }}</td>
+                    <td class="px-2 py-1 text-center">{{ file.l2 }}</td>
+                    <td class="px-2 py-1 text-center">{{ file.l3 }}</td>
+                    <td class="px-2 py-1 text-center">{{ file.status }}</td>
+                    {% if request.user.is_authenticated %}
+                    <td class="px-2 py-1 text-center"><a href="{% url 'edit_file' file.id %}"
+                        class="btn btn-sm btn-warning">Edit</a></td>
+                    <td class="px-2 py-1 text-center"><a href="{% url 'delete_file' file.id %}"
+                        class="btn btn-sm btn-danger">Delete</a></td>
+                    {% endif %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+      </div>
+    </form>
+
+
+
+          <script>
+            const selectAll = document.getElementById('select-all');
+            const checkboxes = document.getElementsByName('selected_files');
+
+            selectAll.addEventListener('click', () => {
+              checkboxes.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+              });
+            });
+          </script>
+
+          {% if success_popup %}
+          <script>
+            alert('Files sent successfully.');
+          </script>
+          {% endif %}
+
+          {% if error_popup %}
+          <script>
+            alert('Please select at least one file to send email.');
+          </script>
+          {% endif %}
+
+          {% endblock img %}

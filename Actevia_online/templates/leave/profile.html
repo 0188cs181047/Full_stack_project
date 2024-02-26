@@ -1,0 +1,126 @@
+{% extends 'leave/base.html' %}
+{% block leave %}
+
+<style>
+    .running-text {
+    font-size: 1.5em;
+    font-weight: bold;
+    animation: runningText 10s linear infinite;
+}
+
+@keyframes runningText {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+</style>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+
+        <div class="card-content">
+            <div class="table-container">
+                <div class="container">
+                    <div class="profile-container">
+                        <br>
+                        <div class="profile-header bg-primary text-white text-center">
+                            <h1 class="display-6">
+                                <marquee class="running-text" behavior="scroll" direction="left">Welcome ,{{username}}.....!</marquee>
+                            </h1>
+                            
+                        </div>
+                        
+
+                    <br>
+                    {% if employee %}
+                    <div class="profile-body">
+                        <div class="profile-info p-4">
+                            <h2 class="text-primary">Employee Information</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="profile-details">
+                                        <strong class="profile-label">Employee ID:</strong> {{ employee.employee_id }}<br>
+                                        <strong class="profile-label">Employee Name:</strong> {{ employee.employee_name }}<br>
+                                        <strong class="profile-label">Gender:</strong> {{ employee.get_gender_display }}<br>
+                                        {% comment %} <strong class="profile-label">Joining Date:</strong> {{ employee.joining_date }}<br> {% endcomment %}
+                                        <strong class="profile-label">Employee Email:</strong> <a href="mailto:{{ employee.employee_email }}" class="text-decoration-none text-primary">{{ employee.employee_email }}</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="profile-details text-left">
+                                        <strong class="profile-label">Manager Name:</strong> {{ employee.manager.manager_name }}<br>
+                                        <strong class="profile-label">Manager Email:</strong> <a href="mailto:{{ employee.manager.manager_email }}" class="text-decoration-none text-primary">{{ employee.manager.manager_email }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                
+                
+                            <br>
+                            {% if manager %}
+    <div class="profile-info">
+        <h2 class="text-primary">Manager Information</h2>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Manager ID:</strong> {{ manager.manager_id }}</li>
+            <li class="list-group-item">
+                <strong>Manager Email:</strong>
+                <a href="mailto:{{ manager.manager_email }}" class="text-decoration-none text-primary">
+                    {{ manager.manager_email }}
+                </a>
+            </li>
+           
+            <li class="list-group-item"><strong>Number of Employees:</strong> {{ employees_count }}</li>
+        </ul>
+        <br>
+        <button type="button" class="btn btn-primary" id="showEmployeesBtn">Show Employees <span id="toggleSymbol">&#x25BC;</span></button>
+    </div>
+
+    <div id="employeesContainer" style="display: none;">
+        <h2 class="text-primary mt-4">Employees</h2>
+        <ul class="list-group">
+            {% for employee in manager.employee_set.all %}
+                <li class="list-group-item">
+                    {{ employee.employee_name }} - <a href="mailto:{{ employee.employee_email }}">{{ employee.employee_email }}</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No employees found.</li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+
+    <script>
+        var employeesContainer = document.getElementById('employeesContainer');
+        var showEmployeesBtn = document.getElementById('showEmployeesBtn');
+        var toggleSymbol = document.getElementById('toggleSymbol');
+
+        showEmployeesBtn.addEventListener('click', function() {
+            if (employeesContainer.style.display === 'none') {
+                employeesContainer.style.display = 'block';
+                toggleSymbol.innerHTML = '&#x25B2;';
+            } else {
+                employeesContainer.style.display = 'none';
+                toggleSymbol.innerHTML = '&#x25BC;';
+            }
+        });
+    </script>
+{% endif %}
+
+                        
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock leave %}

@@ -1,0 +1,13 @@
+{% extends 'teacher/teacher_base.html' %}
+{% block content %}
+<center><h1>Notifications</h1></center>
+<ul>
+  {% for notification in notifications %}
+    <li><p style="color:green; font-weight: bold; ">{{ notification.actor.username }}</p>{{ notification.verb }} <a href="{% url 'see_video' %}">{{ notification.target }}</a><br> 
+          <p style="font-weight: bold;">{{notification.created_at}}</p></li>
+    <br>
+    
+  {% endfor %}
+</ul>
+{% endblock %}
+{% block qr %}{% endblock qr %}

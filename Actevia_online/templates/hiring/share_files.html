@@ -1,0 +1,32 @@
+{% if success_popup %}
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <h2>Files shared successfully</h2>
+            <p>Your selected files have been sent to the email address you provided.</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+{% endif %}
+
+{% if error_popup %}
+    <div id="error-modal" class="modal">
+        <div class="modal-content">
+            <h2>Error sharing files</h2>
+            <p>There was an error while trying to share your files.</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+{% endif %}
+
+<script>
+    function closeModal() {
+        document.querySelector('.modal').style.display = 'none';
+        window.location.href = '{% url "job_file_counts" %}';
+    }
+
+    {% if success_popup %}
+        document.getElementById('success-modal').style.display = 'block';
+    {% elif error_popup %}
+        document.getElementById('error-modal').style.display = 'block';
+    {% endif %}
+</script>

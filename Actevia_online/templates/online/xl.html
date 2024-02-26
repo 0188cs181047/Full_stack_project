@@ -1,0 +1,50 @@
+{% extends 'online/admin_base.html' %}
+{% load widget_tweaks %}{% block content %}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        #xl {
+            font-weight: bold;
+            margin: auto;
+            font-size: 15px;
+            width: 50%;
+            background-color: whitesmoke;
+        }
+
+        #xl:hover {
+            box-shadow: 1px 1px 5px #e8e6e6;
+
+        }
+    </style>
+</head>
+
+<div class="container-fluid" style="padding: 5px;">
+    <div class="container" id="xl">
+        <h2 style="text-align:center;">Add Questions from Excel</h2>
+        <hr>
+        <br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="course">Course:</label>
+                <select name="course" id="course">
+                    {% for course in courses %}
+                    <option value="{{ course.id }}">{{ course.course_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="file">Upload Excel file:</label>
+                <input type="file" name="file" id="file">
+            </div>
+            <center><button type="submit" class="btn btn-success">Submit</button></center>
+        </form>
+        <br><br><br>
+    </div>
+</div>
+
+{% endblock content %}

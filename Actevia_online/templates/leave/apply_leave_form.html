@@ -1,0 +1,51 @@
+
+{% extends 'leave/base.html' %}
+{% block leave %}
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <div class="mdc-card py-2">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0">Apply leave ({{ current_date|date:"Y-m-d" }})</h4>
+          {% if form.errors %}
+          <div class="alert alert-danger">
+            <ul>
+              {% for field in form %}
+                {% for error in field.errors %}
+                  <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+  </div>
+</div>
+
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <form method="post" action="{% url 'apply_leave_form' %}">
+        {% csrf_token %}
+  {% comment %} {{ form.as_p }} {% endcomment %}
+  Leave Reason : {{ form.leave_reason }}<br>
+  Start Date : {{ form.start_date }}<br>
+  End Date : {{ form.end_date }}<br>
+  Leave Type : {{ form.leave_type}}
+    {% comment %} Work from Home{{ form.work_from_home }}<br> {% endcomment %}
+  Description : {{ form.description }}<br>
+ 
+        <div class="btn-group" role="group" aria-label="Third group">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+{%endblock%}

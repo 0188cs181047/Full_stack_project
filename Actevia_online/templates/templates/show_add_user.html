@@ -1,0 +1,126 @@
+
+{% extends 'home.html' %}
+
+{% block policy %}
+
+<div class="container">
+  <br>
+  {% if success_message %}
+  <div class="alert alert-success" role="alert">
+      {{ success_message }}
+  </div>
+{% endif %}
+
+{% if no_selection_message %}
+  <div class="alert alert-warning" role="alert">
+      {{ no_selection_message }}
+  </div>
+{% endif %}
+<br>
+<form id="deleteForm" method="post" action="{% url 'user_delete' %}">
+    {% csrf_token %}
+    {% if users %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" onclick="toggleAll(this)"></th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Active</th>
+                    <th>App Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td><input type="checkbox" name="selected_users" value="{{ user.id }}"></td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <span class="status-toggle"
+                            data-user-id="{{ user.id }}"
+                            data-toggle-field="is_active"
+                            data-toggle-value="{{ user.is_active }}">
+                            {% if user.is_active %}
+                                Active
+                            {% else %}
+                                Inactive
+                            {% endif %}
+                        </span>
+                    </td>
+                    <td>
+                      {{user.app_name}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-outline-danger" onclick="confirmDelete()">Delete Selected Users</button>
+        
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+</form>
+
+ 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.status-toggle').click(function() {
+      var userId = $(this).data('user-id');
+      var toggleField = $(this).data('toggle-field');
+      var toggleValue = $(this).data('toggle-value');
+
+      // Send AJAX request to update user status
+      $.ajax({
+        type: 'POST',
+        url: '/toggle-user-status/',
+        data: {
+          'user_id': userId,
+          'toggle_field': toggleField,
+          'toggle_value': toggleValue
+        },
+        success: function(response) {
+          // Update the UI with the new status value
+          var newToggleValue = response.toggle_value;
+          var statusText = newToggleValue ? 'Active' : 'Inactive';
+          if (toggleField === 'is_staff') {
+            statusText = newToggleValue ? 'Staff' : 'Not Staff';
+          }
+          $(this).data('toggle-value', newToggleValue).text(statusText);
+        }
+      });
+    });
+  });
+</script>
+
+
+<script>
+  function toggleAll(source) {
+      checkboxes = document.getElementsByName('selected_users');
+      for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].checked = source.checked;
+      }
+  }
+</script>
+
+
+
+<script>
+  function confirmDelete() {
+    if (confirm("Are you sure you want to delete the selected user(s)?")) {
+      document.getElementById("deleteForm").submit();
+    }
+  }
+
+  function cancelDelete() {
+    alert("Delete action canceled.");
+  }
+</script>
+
+
+
+</div>
+{% endblock %}

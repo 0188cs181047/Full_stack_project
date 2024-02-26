@@ -1,0 +1,44 @@
+{% extends 'online/admin_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+
+</head>
+
+<br><br>
+<h2 style="text-align:center;">Update Teacher</h2>
+<div>
+  <form method="post" autocomplete="off" style="margin-left:200px;margin-right:200px;">
+    {% csrf_token %}
+    
+    <label for="{{ my.userForm.username.id_for_label }}">Username</label>
+    {{ my.userForm.username|add_class:"form-control" }}
+    
+    <label for="{{ my.userForm.password1.id_for_label }}">Password</label>
+<input type="password" name="{{ my.userForm.password1.html_name }}" class="form-control" placeholder="Password">
+
+<label for="{{ my.userForm.password2.id_for_label }}">Confirm Password</label>
+<input type="password" name="{{ my.userForm.password2.html_name }}" class="form-control" placeholder="Confirm Password">
+
+    
+    <label for="{{ my.userForm.email.id_for_label }}">Email</label>
+    {{ my.userForm.email|add_class:"form-control" }}
+    
+    <label for="{{ my.teacherForm.address.id_for_label }}">Address</label>
+    {{ my.teacherForm.address|add_class:"form-control" }}
+    
+    <label for="{{ my.teacherForm.mobile.id_for_label }}">Mobile</label>
+    {{ my.teacherForm.mobile|add_class:"form-control" }}
+    
+    
+    <br><br>
+    
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+  
+</div>
+
+
+
+<br><br><br><br><br><br><br><br>
+{% endblock content %}

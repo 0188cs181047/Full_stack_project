@@ -1,0 +1,120 @@
+{% load static %}
+
+<aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
+    <div class="mdc-drawer__header border-bottom">
+        
+        <a class="navbar-brand" href="{% url 'portal'%}">
+            <img src="{% static 'imag/Footer_Logo.png' %}" alt="Logo" width="190" height="60">
+          </a>
+       
+    </div>
+
+    <style>
+        .mdc-list-item {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+    <div class="mdc-drawer__content">
+        <div class="mdc-list-group">
+            <nav class="mdc-list mdc-drawer-menu">
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="{% url 'profile' %}">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">account_circle</i> Profile
+                    </a>
+                </div>
+                
+                
+                {% comment %} <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="{% url 'leave_home'%}">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i> Home
+                    </a>
+                </div> {% endcomment %}
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="#" id="my-leave-link">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">business</i> My Leave
+                    </a>
+                    <ul class="mdc-list mdc-drawer-submenu" id="my-leave-dropdown">
+                        <li class="mdc-list-item">
+                            <a class="mdc-drawer-link" href="{% url 'my_holiday' %}">
+                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">date_range</i> My Holidays
+                            </a>
+                        </li>
+                        <li class="mdc-list-item">
+                            <a class="mdc-drawer-link" href="{% url 'apply_leave_form' %}">
+                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">assignment</i> Apply for Leave
+                            </a>
+                        </li>
+                        <li class="mdc-list-item">
+                            <a class="mdc-drawer-link" href="{% url 'apply_wfh_form' %}">
+                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i> Apply for WFH
+                            </a>
+                        </li>
+                        <li class="mdc-list-item">
+                            <a class="mdc-drawer-link" href="{% url 'show_leave_balance' %}">
+                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">account_balance_wallet</i> Leave Balance
+                            </a>
+                        </li>
+                        
+                        <li class="mdc-list-item">
+                            <a class="mdc-drawer-link" href="{% url 'show_all_apply_leave' %}">
+                                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">history</i> My History
+                            </a>
+                        </li>
+                    </ul>
+                    
+                </div>
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="{% url 'leave_approval'%}">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">notifications</i>Show Notification
+                    </a>
+                </div>
+                {% if user.is_staff or user.is_superuser %}
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="{% url 'leave_balances' %}">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">event</i>All Employee Balance
+                    </a>
+                </div>
+                
+                
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="{% url 'leave_manager_list' %}">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">supervisor_account</i> Registered Manager
+                    </a>
+                </div>
+                
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="{% url 'leave_employee_list' %}">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">person</i> Registered Employee
+                    </a>
+                </div>
+                
+                {% endif %}
+                
+            </nav>
+        </div>
+    </div>
+    
+    <script>
+        // JavaScript code to handle the dropdown toggle
+        const myLeaveLink = document.getElementById('my-leave-link');
+        const myLeaveDropdown = document.getElementById('my-leave-dropdown');
+        let dropdownVisible = false;
+    
+        myLeaveLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownVisible = !dropdownVisible;
+            myLeaveDropdown.style.display = dropdownVisible ? 'block' : 'none';
+        });
+    </script>
+    
+    
+
+
+</aside>
+
+
+
+
+<!-- partial -->
+

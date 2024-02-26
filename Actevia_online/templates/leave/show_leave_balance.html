@@ -1,0 +1,114 @@
+{% extends 'leave/base.html' %}
+
+{% block leave %}
+
+
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0"><span style="color: rgb(60, 20, 98); font-weight: bold;">
+                {% if error_message %}
+                <p>{{ error_message }}</p>
+                {% else %}
+                {{username}}</span>  ,It's your Leave Balance 
+                {% endif %}
+                
+            
+            </h4>
+            
+            <div class="text-start">
+                {% if user.is_staff or user.is_superuser %}
+                <a href="{% url 'leave_balance_create'%}">
+                    <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="create_new">
+                        <i class="material-icons mdc-button__icon">add</i><span> Add New</span>
+                    </button>
+                </a>
+                {% endif %}
+               
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <div class="mdc-card">
+      <div class="table-responsive">
+
+          <table class="table table-bordered">
+              <colgroup>
+                  <col width="30%">
+                  <col width="10%">
+                  <col width="10%">
+                  <col width="20%">
+                  <col width="20%">
+                  <col width="10%">
+              </colgroup>
+              <thead>
+                  <tr>
+                      <th class="text-center py-2">Leave Type</th>
+                      <th class="text-center py-2">Leave Balance</th>
+                      <th class="text-center py-2">Leaves Pending For Approval</th>
+                      <th class="text-center py-2">Approved Days Taken</th>
+                      <th class="text-center py-2">Workfrom Home Balance</th>
+                      <th class="text-center py-2">Workfrom Home Pending For Approval</th>
+                      
+                  </tr>
+              </thead>
+              <tbody>
+                {% if employee %}
+                {% for leave_balance in leave_balances %}
+                <tr>
+                  <td class="text-center py-2">
+                    {% if leave_balance.leave_type == 'CL' %}
+                       <strong>Casual Leave</strong>
+                    {% elif leave_balance.leave_type == 'EL' %}
+                      <strong> Earned Leave </strong>
+                    {% elif leave_balance.leave_type == 'CS' %}
+                       <strong>Compensatory Leave</strong>
+                    {% elif leave_balance.leave_type == 'BL' %}
+                      <strong>Balance Leave </strong>
+                    {% else %}
+                      Unknown Leave Type
+                    {% endif %}
+                  </td>
+                  <td class="text-center py-2">{{ leave_balance.total_balance }} day(s)</td>
+                  <td class="text-center py-2">{{ leave_balance.pending_leave_count }} Leave(s)</td>
+                  <td class="text-center py-2">{{ leave_balance.days_taken }} day(s)</td>
+                  <td class="text-center py-2">{{ leave_balance.work_from_home_balance }} days(s)</td>
+                  <td class="text-center py-2">{{ leave_balance.pending_work_from_home }}</td>
+
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="4">No leave balances available for the selected employee.</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                  <td class="text-center py-2"><strong>Total</strong></td>
+                  <td class="text-center py-2"><strong>{{ total_leave_balance }} day(s)</strong></td>
+                  <td class="text-center py-2"><strong>{{ total_pending_leave_count }} Leave(s)</strong></td>
+                  <td class="text-center py-2"><strong>{{ total_days_taken }} day(s)</strong></td>
+                  <td class="text-center py-2"><strong>{{ total_work_from_home_balance }} day(s)</strong></td>
+                  <td class="text-center py-2"><strong>{{ total_work_from_home_pending }} WFH(s)</strong></td>
+              </tr>
+              {% else %}
+                <tr>
+                  <td colspan="4">Please select an employee to view leave balances.</td>
+                </tr>
+              {% endif %}
+              </tbody>
+          </table>
+
+      </div>
+  </div>
+</div>
+
+{% block ScriptBlock %}
+
+{% endblock %}
+
+
+{% endblock %}

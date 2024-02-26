@@ -1,0 +1,51 @@
+{% load static %}
+<!-- partial:partials/_sidebar.html -->
+<aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
+    <div class="mdc-drawer__header border-bottom">
+        <br>
+        <a class="navbar-brand" href="{% url 'portal'%}">
+            <img src="{% static 'imag/Footer_Logo.png' %}" alt="Logo" width="190" height="60">
+          </a>
+       
+    </div>
+    <div class="mdc-drawer__content">
+        <div class="mdc-list-group">
+            <nav class="mdc-list mdc-drawer-menu">
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="/asset">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i> Home
+                    </a>
+                </div>
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="/asset/new_asset_detail">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">business</i> View Asset List
+                    </a>
+                </div>
+
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="/asset/show-approval-notification">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">group</i> Notification
+                    </a>
+                </div>
+
+                <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="/asset/asset_detail">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">group</i> Transfer Asset
+                    </a>
+                </div>
+
+                {% comment %} <div class="mdc-list-item mdc-drawer-item">
+                    <a class="mdc-drawer-link" href="">
+                        <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">list</i> Transfer Asset
+                    </a>
+                </div> {% endcomment %}
+                    {% comment %} <div class="mdc-list-item mdc-drawer-item">
+                        <a class="mdc-drawer-link" href="{% url 'employee-page' %}">
+                            <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">group</i> Employee List
+                        </a>
+                    </div> {% endcomment %}
+            </nav>
+        </div>
+    </div>
+</aside>
+<!-- partial -->

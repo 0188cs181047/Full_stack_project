@@ -1,0 +1,141 @@
+{% extends "hiring/home.html" %}
+{% load static %}
+{% comment %}
+<link rel="stylesheet" href="{% static '/style.css' %}" /> {% endcomment %}
+{% comment %} <img src="{% static 'img/logo.png' %}" alt="My image"> {% endcomment %}
+{% block img %}
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Date</h5>
+
+                    <p>{{ resume.created_at }}</p>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">reseme</th>
+                                <th scope="col">Candidate</th>
+                                <th scope="col">Contact</th>
+                                <th scope="col">Owner</th>                                
+                                <th scope="col">L1</th>
+                                <th scope="col">L2</th>
+                                <th scope="col">L3</th>
+                                <th scope="col">Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for resume in employee.files.all %}
+                            <tr>
+                                <td><a href="{{ resume.files.url }}">{{resume}}</a></td>
+                                <td>
+                                    {% for candidate in employee.candidates_name.all %}
+                                    {{ candidate.name }}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for phone in employee.phone_numbers.all %}
+                                    {{ phone.number }}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for owner in employee.owners_name.all %}
+                                        {{ owner.name }}
+                                    {% endfor %}
+                                </td>
+                    
+                                {% if resume.resumeownership_set.exists %}
+                                {% for ownership in resume.resumeownership_set.all %}
+                                
+                                
+                                <td>{{ ownership.l1 }}</td>
+                                <td>{{ ownership.l2 }}</td>
+                                <td>{{ ownership.l3 }}</td>
+                                <td>{{ ownership.status }}</td>
+                                <td>
+
+                                <td><a href="{% url 'update_hr' ownership.id%}">Update</a>
+                                    <a href="{% url 'hr_delete' ownership.id%}">delete</a>
+                                </td>
+                                {% endfor %}
+                                {% else %}
+                                <td class="l1">
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="resume_id" value="{{ resume.id }}">
+                                        <div class="form-group">
+                                            <input type="text" name="l1" class="form-control" placeholder="L1">
+                                        </div>
+                                </td>
+                                
+                                <td class="l2">
+                                    <div class="form-group">
+                                        <input type="text" name="l2" class="form-control" placeholder="L2">
+                                    </div>
+                                </td>
+                                <td class="l3">
+                                    <div class="form-group">
+                                        <input type="text" name="l3" class="form-control" placeholder="L3">
+                                    </div>
+                                </td>
+                                <td class="status">
+                                    <div class="form-group">
+                                        <input type="text" name="status" class="form-control" placeholder="Status">
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                    </form>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('#resume-table tr').click(function () {
+            // Clear previous selections
+            $('#resume-table tr.active').removeClass('active');
+            $('.owner-name').text('');
+            $('.status').text('');
+
+            // Update selected row and hidden input field
+            $(this).addClass('active');
+            var resumeId = $(this).attr('id').split('-')[1];
+            $('#resume-id-input').val(resumeId);
+
+            // Update form fields with resume ownership data
+            var ownership = resumeOwnershipData[resumeId];
+            if (ownership) {
+                $('.owner-name').text(ownership.owner_name);
+                $('.status').text(ownership.status);
+                $('#owner-name-input').val(ownership.owner_name);
+                $('#status-input').val(ownership.status);
+            }
+        });
+    });
+</script>
+
+{% endblock img %}

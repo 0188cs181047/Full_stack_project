@@ -1,0 +1,207 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  {% block title %}
+  <title>LMS Home Page</title>
+  {% endblock title %}
+  <style>
+    #over {
+      --b: 0.1em;
+      /* the thickness of the line */
+      --c: #1095c1;
+      /* the color */
+
+      color: #0000;
+      padding-block: var(--b);
+      background:
+        linear-gradient(var(--c) 50%, #000 0) 0% calc(100% - var(--_p, 0%))/100% 200%,
+        linear-gradient(var(--c) 0 0) 0% var(--_p, 0%)/var(--_p, 0%) var(--b) no-repeat;
+      -webkit-background-clip: text, padding-box;
+      background-clip: text, padding-box;
+      transition: .3s var(--_s, 0s) linear, background-size .3s calc(.3s - var(--_s, 0s));
+    }
+
+    #over:hover {
+      --_p: 100%;
+      --_s: .3s;
+    }
+
+
+    #over {
+      font-family: system-ui, sans-serif;
+      font-size: 50px;
+      margin: 0;
+      cursor: pointer;
+      padding: 0 .1em;
+      font-weight: bold;
+    }
+
+    #hover {
+      --c: linear-gradient(#0e4bda 0 0);
+
+      padding-bottom: .20em;
+      background: var(--c), var(--c);
+      background-size: .0em .0em;
+      background-position: 50% 100%;
+      background-repeat: no-repeat;
+      transition: .3s linear, background-size .3s .2s linear;
+    }
+
+    #hover:hover {
+      background-size: 40% .1em;
+      background-position: 0% 100%, 5% 100%;
+    }
+
+    #contact {
+      width: 70%;
+      padding-top: 10px;
+      padding-bottom: 20px;
+      background-color: whitesmoke;
+
+      margin: 0 auto;
+      text-align: justify;
+    }
+
+    .container-fluid {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+
+    #contact:hover {
+      box-shadow: 2px 2px 5px #888888;
+
+    }
+
+    #body {
+      margin: 0px;
+      padding: 0px;
+
+
+    }
+
+    #section-jumbotron {
+      background-attachment: fixed;
+      background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTan2d7ExsvT0vEdcYHZRbOZ22kthuiCGBDNQ&usqp=CAU");
+
+      background-repeat: no-repeat;
+      background-size: cover;
+      box-shadow: 1px 1px 10px #181616;
+
+    }
+
+    #other {
+      width: 100%;
+      /* padding: 10px; */
+      max-height: 50%;
+      background-color: white;
+      margin: 0px;
+      font-weight: bold;
+      font-style: var(--_s);
+      
+
+
+    }
+
+    #other .c {
+      background-color: white;
+
+      text-align: center;
+      
+
+    }
+
+    #other:hover {
+      box-shadow: 1px 1px 5px #e8e6e6;
+
+    }
+    body{
+      background-color: black;
+      background-attachment: fixed;
+    
+    }
+  </style>
+</head>
+
+<body>
+
+
+  {% include "online/navbar.html" %}
+
+
+
+  
+
+
+    {% block body %}
+    <div class="container-fluid" id="body">
+      <section id="section-jumbotron"
+        class="jumbotron jumbotron-fluid d-flex justify-content-center align-items-center">
+        <div class="container text-center">
+          <h5 class="display-3 " id="over">Actevia Technology Services Pvt. Ltd. </h5>
+          <br>
+          <p class="display-5 d-none d-sm-block ">Attend your examinations online!</p>
+          <p class="lead">Sign Up now to start your first online examination</p>
+
+
+          <p><strong> Start Your Journey Here:</strong></p>
+          <br>
+          <a href="/student/student_signIn" class="btn btn-lg btn-success"
+            style="padding-right: 5px; padding-left: 0px;padding-top: 0px; border-radius: 5%; padding-bottom: 0px;"><i
+              class="fa fa-graduation-cap" aria-hidden="true" s></i>SignIn </a>
+
+          <br><br><br>
+        </div>
+      </section>
+    </div>
+
+    {% endblock body %}
+  </body>
+
+  {% block contact %}
+ 
+  {% endblock contact %}
+
+  {% block other %}
+
+  
+  {% endblock other %}
+
+
+  {% block footer %}
+  {% include "online/footer.html" %}
+  {% endblock footer %}
+
+
+
+
+  <!-- Optional JavaScript; choose one of the two! -->
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>

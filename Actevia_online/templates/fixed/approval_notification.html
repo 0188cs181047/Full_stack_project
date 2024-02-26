@@ -1,0 +1,78 @@
+{% extends 'fixed/home.html' %}
+
+{% block img %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Notifications</h4>
+            
+            <div class="text-start">
+               
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="table-responsive">
+        
+
+           <table class="table">
+    <colgroup>
+        <col width="10%">
+        <col width="35%">
+        <col width="20%">
+        <col width="25%">
+        <col width="10%">
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="text-center py-1">Asset ID</th>
+            <th class="text-center py-1">Email</th>
+            <th class="text-center py-1">Sender Name</th>
+            <th class="text-center py-1">Action</th>
+        </tr>
+    </thead>
+
+<tbody>
+    {% for notification in notifications %}
+    <tr>
+        <td class="text-center py-1">{{ notification.Asset_inform.asset_id }}</td>
+        <td class="text-center py-1">{{ notification.Asset_inform.email }}</td>
+        <td class="text-center py-1">{{ notification.Asset_inform.asset_owner }}</td>
+        <td class="text-center py-1">
+            {% if notification.Asset_inform.approved %}
+            Approved
+            {%else%}
+            {% if notification.Asset_inform.requested_approval %}
+                {% comment %} {% if notification.user == request.user %} {% endcomment %}
+                    <button class="btn btn-primary" style="background-color: #7a00ff;">
+                        <a href="/asset/approve-approval/{{ notification.Asset_inform.id }}/{{ notification.user.id }}/accept/" style="color:white;">Accept</a>
+                    </button>
+                    <button class="btn btn-primary" style="background-color: #7a00ff;">
+                        <a href="/asset/approve-approval/{{ notification.Asset_inform.id }}/{{ notification.user.id }}/reject/" style="color:white;">Reject</a>
+                    </button>
+                {% else %}
+                    Rejected
+                {% endif %}
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No notifications found.</td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+
+</table>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock img %}

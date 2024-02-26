@@ -1,0 +1,66 @@
+{% extends "hiring/home.html" %}
+{% load static %}
+{% comment %} <link rel="stylesheet" href="{% static '/style.css' %}"/> {% endcomment %}
+{% comment %} <img src="{% static 'img/logo.png' %}" alt="My image"> {% endcomment %}
+  {% block img %}
+  
+  
+<h1 align="center">HR Resources Details</h1>
+
+<form method="get">
+
+    {% comment %} {{filters.form1}} {% endcomment %}
+
+{% comment %} <input type="submit" value="Search1" name=""> {% endcomment %}
+
+</form>
+
+<hr>
+<form method="get">
+<table class="table table-hover table-bordered border-primary">
+    <tr>
+        <th>Job ID</th>
+        <th>Resume</th>
+        
+        
+        
+    <tbody>
+{% for resource in resources%}
+    <tr>
+        {% comment %} <h2>HR instance {{ page.start_index|add:forloop.counter0 }}:</h2> {% endcomment %}
+        <td><a href="{% url 'detail_hr' resource.id %}">{{ resource.job_id }}</a>
+        <td>
+
+        
+                    {{ resource.uploadedfile_set.count }}
+       
+
+        </td>
+        
+    </tr>
+    {% endfor %}
+</table>
+<br>
+<br>
+<center><button class="btn btn-danger "><a href="/hiring/upload" style="text-decoration: none; color: white;">Add New Record</a></button></center>
+<br>
+{% comment %} <center><button><a href="{% url 'logout' %}" class="btn btn-primary">Logout</a></button></center> {% endcomment %}
+</form>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page.has_previous %}
+        <a href="{% url 'show1' prev_page %}">Previous</a>
+        {% endif %}
+
+        <span class="current-page">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}.
+        </span>
+
+        {% if page.has_next %}
+        <a href="{% url 'show1' next_page %}">Next</a>
+
+        {% endif %}
+    </span>
+</div>
+{% endblock img %}

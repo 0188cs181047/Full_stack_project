@@ -1,0 +1,117 @@
+{% extends 'leave/base.html' %}
+
+{% block leave %}
+
+
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Leave Balance</h4>
+            
+            <div class="text-start">
+                {% if user.is_staff or user.is_superuser %}
+                <a href="{% url 'leave_balance_create'%}">
+                    <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="create_new">
+                        <i class="material-icons mdc-button__icon">add</i><span> Add New</span>
+                    </button>
+                </a>
+                {% endif %}
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="table-responsive">
+    
+            <form method="POST" action="{% url 'leave_balance_delete' %}">
+                {% csrf_token %}
+                <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                    <div class="mdc-card">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <colgroup>
+                                    <col width="10%">
+                                    <col width="30%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th class="text-center py-1">
+                                            <label>
+                                                <input type="checkbox" id="select-all-checkbox">
+                                            </label>
+                                        </th>
+                                        <th class="text-center py-1">Employee Name</th>
+                                        <th class="text-center py-1">Leave Balance</th>
+                                        <th class="text-center py-1">Workfrom Home Balance</th>
+                                        <th class="text-center py-1">Balance Increase Per Month</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for leave_balance in leave_balances %}
+                                    <tr>
+                                        <td class="text-center py-1">
+                                            <label>
+                                                <input type="checkbox" class="checkbox" name="leave_balance_ids" value="{{ leave_balance.id }}">
+                                            </label>
+                                        </td>
+                                        <td class="text-center py-1">
+                                            <a href="{% url 'leave_balance_update' pk=leave_balance.pk %}">
+                                                {{ leave_balance.employee.employee_name }}
+                                            </a>
+                                        </td>
+                                        <td class="text-center py-1">{{ leave_balance.balance }}</td>
+                                        <td class="text-center py-1">{{ leave_balance.work_from_home_balance }}</td>
+                                        <td class="text-center py-1">{{ leave_balance.balance_increase }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                    <div class="mdc-card">
+                        <div class="text-end">
+                            <button class="mdc-button mdc-button--raised mdc-ripple-upgraded mdc-button--error" type="submit">Delete Selected</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <script>
+                // Select all checkbox functionality
+                const selectAllCheckbox = document.querySelector('#select-all-checkbox');
+                const checkboxes = document.querySelectorAll('.checkbox');
+            
+                selectAllCheckbox.addEventListener('change', () => {
+                    checkboxes.forEach((checkbox) => {
+                        checkbox.checked = selectAllCheckbox.checked;
+                    });
+                });
+            </script>
+            
+            
+     
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% block ScriptBlock %}
+
+
+
+
+{% endblock %}
+
+{% endblock %}
+

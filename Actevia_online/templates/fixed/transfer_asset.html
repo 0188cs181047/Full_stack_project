@@ -1,0 +1,62 @@
+{% extends 'fixed/home.html' %}
+
+{% block img %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <div class="mdc-card py-2">
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="card-title mb-0">Transfer Asset</h4>
+    </div>
+  </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <div class="mdc-card py-2">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="text-start">
+        <table class="table table-striped table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Asset ID:</th>
+              <td>{{ asset.asset_id }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Asset Owner:</th>
+              <td>{{ asset.asset_owner }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Asset Type:</th>
+              <td>{{ asset.asset_type }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Date Created:</th>
+              <td>{{ asset.date_created }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Asset Status:</th>
+              <td>{{ asset.asset_status }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <div class="mdc-card py-2">
+  <div class="d-flex justify-content-between align-items-center">
+<div class="text-start">
+<form method="post">
+{% csrf_token %}
+<button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" name="accept">
+<i class="material-icons mdc-button__icon">check_circle</i>
+<span>Accept</span>
+</button> 
+      <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" name="reject">
+        <i class="material-icons mdc-button__icon">cancel</i>
+        <span>Reject</span>
+      </button>
+    </form>
+  </div>
+</div>
+ </div>
+</div>
+{% endblock img %}

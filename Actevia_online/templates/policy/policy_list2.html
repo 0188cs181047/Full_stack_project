@@ -1,0 +1,92 @@
+
+
+
+
+
+
+
+{% extends 'policy/base.html' %}
+
+{% block policy %}
+
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Policy List</h4>
+            
+            <div class="text-start">
+                {% if request.user.is_authenticated %}
+                <a href="/policy/new">
+                  <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="create_new"><i class="material-icons mdc-button__icon">add</i><span> Add Policy</span></button>
+                </a>
+
+                {% else %}
+                Login Please
+                {% endif %}
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+        <div class="table-responsive">
+          <form method="POST" action="/policy/policy_delete/">
+            {% csrf_token %}
+            <table class="table">
+                <colgroup>
+
+                    <col width="40%">
+                    <col width="30%">
+                    <col width="30%">
+                    
+                </colgroup>
+                <thead>
+                    
+                    <tr>
+                       
+                      <th></th>
+                        <th class="text-center py-1">Policy Name</th>
+                        
+                        <th></th>
+                        
+                      
+                    </tr>
+
+                </thead>
+                <tbody>
+                  {% for policy in policies %}
+                  <tr>
+                    <td class="text-center py-1" ><input type="checkbox"  name="selected_policies" value="{{ policy.pk }}"></td>
+                   
+                    <td class="text-center py-1"><a href="/policy/policy_files/{{policy.pk}}"><button type="button" class="btn btn-outline-dark">{{ policy.policy_name }}</button></a></td></em>
+                    
+                {% endfor %}
+              </tbody>
+            </table>
+            <button type="submit" class="btn btn-outline-danger" onclick="if(document.querySelectorAll('input[type=checkbox]:checked').length === 0) {alert('Please select at least one policy to delete.'); return false;} else {return confirm('Are you sure you want to delete the selected policies?');}">Delete Selected Policies</button>
+           
+          </form>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% block ScriptBlock %}
+
+
+
+
+
+
+{% endblock %}
+
+{% endblock %}
+
+

@@ -1,0 +1,21 @@
+{% extends 'fixed/home.html' %}
+
+{% block img %}
+  <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    
+    <div class="mdc-card">
+      <div class="card-header bg-primary text-white">
+        <h1 class="my-4">Asset ID: <span class="badge bg-secondary">{{ asset.asset_id }}</span></h1>
+      </div>
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary" style="background-color: #7a00ff;">Save</button>
+          <button type="submit" class="btn btn-danger"><a href="/asset/update_asset/{{asset.pk}}" style="color: white;">Delete</a></button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock img %}

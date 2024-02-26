@@ -1,0 +1,11 @@
+{% extends 'teacher/teacher_base.html' %}
+{% block content %}
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="SUBMIT">
+</form>
+{% endblock  %}
+
+{% block qr %}{% endblock qr %}

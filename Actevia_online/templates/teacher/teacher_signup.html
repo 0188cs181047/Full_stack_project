@@ -1,0 +1,74 @@
+
+</html>
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    {% comment %} <style>
+
+        form{
+           margin: 50px; 
+          
+        }
+
+    </style> {% endcomment %}
+
+    {% block title %}
+<title>Teacher signUp</title>
+{% endblock title %}
+  </head>
+  <body>
+    {% include "online/navbar.html" %}
+ 
+
+
+<br><br><br>
+<div class="container shadow-sm p-3 mb-5 bg-body rounded" style="width: 50%; font-weight: bold;">
+  <h3 style="text-align: center;">Evaluator Signup</h3><hr>
+  
+  <form method="POST" autocomplete="off" style="margin-left: 200px; margin-right: 200px;">
+    {% csrf_token %}
+    
+    <div class="form-group">
+      <label for="{{ user_form.username.id_for_label }}">Username</label>
+      {{ user_form.username|add_class:"form-control" }}
+    </div>
+    
+    <div class="form-group">
+      <label for="{{ user_form.email.id_for_label }}">Email</label>
+      {{ user_form.email|add_class:"form-control" }}
+    </div>
+    
+    <div class="form-group">
+      <label for="{{ user_form.password1.id_for_label }}">Password</label>
+      {{ user_form.password1|add_class:"form-control" }}
+    </div>
+    
+    <div class="form-group">
+      <label for="{{ user_form.password2.id_for_label }}">Confirm Password</label>
+      {{ user_form.password2|add_class:"form-control" }}
+    </div>
+    
+    <div class="form-group">
+      <label for="{{ teacher_form.address.id_for_label }}">Address</label>
+      {{ teacher_form.address|add_class:"form-control" }}
+    </div>
+    
+    <div class="form-group">
+      <label for="{{ teacher_form.mobile.id_for_label }}">Mobile</label>
+      {{ teacher_form.mobile|add_class:"form-control" }}
+    </div>
+    
+    <input type="submit" value="Sign Up" class="btn btn-primary" style="border-radius: 0;">
+  </form>
+  
+  
+  
+</div>
+
+
+<br><br>
+{% include "online/footer.html" %}
+  </body>
+</html>

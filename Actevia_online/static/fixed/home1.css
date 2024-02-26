@@ -1,0 +1,143 @@
+#img{
+   margin: 0px;
+   padding: 0pxpx;
+}
+#img #row1{
+    background-color: whitesmoke;
+}
+
+#img #row1 #row_img{
+    padding-top: 25px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+
+}
+#img #row1 #row_content{
+    padding-top: 30px;
+}
+#img #row1 #row_content a{
+    text-decoration: none;
+    color: red;
+    padding-top: 30px;
+    margin: 7px;
+    
+}
+
+#img #row1 #row_content a:hover{
+    color: darkblue;
+    font-weight: bold;
+}
+#img #row1 #row_content #user{
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}
+#img #row1 #row_content h1{
+    color: darkblue;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+
+
+#img #row2{
+    
+    background-color:lightblue;
+    padding: 10px;
+   
+}
+#img #row2 #row2_img img{
+    
+padding-left: 210px;
+}
+
+#img #row2 #row2_content{
+    padding-top: 50px;
+}
+
+#img #row2 #row2_content a{
+    text-decoration: none;
+    color: red;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+#img #row2 #row2_content a:hover{
+    color:white;
+    font-weight: bold;
+}
+
+#img #row2 #row2_content h1{
+    color:white;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#img #row2 #row2_content #user{
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    
+}
+
+#img #all_card{
+    background-color:white;
+    margin: 0px;
+    padding-bottom: 25px;
+    padding-top: 10px;
+    padding-left: 60px;
+
+}
+
+#img #all_card .card{
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+
+}
+#img #all_card .card:hover{
+    box-shadow: 9px 7px 9px rgba(0, 0, 0, 0.2);
+}
+#img #all_card .card .card-body h5{
+    color: black;
+    font-weight: bold;
+    margin: 5px;
+
+}
+#img #all_card .card .card-body h5:hover{
+    color: blue;
+}
+
+#img #all_card .card .card-body a{
+    text-decoration: none;
+    color: red;
+}
+
+#img #all_card .card .card-body a:hover{
+    color:black;
+    font-weight: bold;
+}
+
+#emp_detail{
+    text-align: center;
+    color: black;
+    font-weight: bold;   
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 0px;     
+}
+
+#emp_detail table tbody th a{
+    text-decoration: none;
+    color:red;
+
+}
+
+#emp_detail table tbody th a:hover{
+    color: black;
+    font-weight: bold;
+}
+

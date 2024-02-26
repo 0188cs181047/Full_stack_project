@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% extends "hiring/home.html" %}
+{% load static %}
+{% block img %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+<div class="mdc-card">
+    <div class="card-header bg-dark text-white">
+        <h3 class="text-center">Enter Details</h3>
+    </div>
+    <div class="card-body">
+        <form method="POST" class="post-form container-fluid" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Company Name:</label>
+                <div class="col-sm-10">
+                    {{ form1.companyname }}
+                </div>
+            </div><br>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Position:</label>
+                <div class="col-sm-10">
+                    {{ form1.Position }}
+                </div>
+            </div><br>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Resources Required:</label>
+                <div class="col-sm-10">
+                    {{ form1.resourcerequired }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">JD:</label>
+                <div class="col-sm-10">
+                    {{ form1.jd }}
+                </div>
+            </div><br>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Remaining Resources:</label>
+                <div class="col-sm-10">
+                    {{ form1.resourceremaining }}
+                </div>
+            </div>
+             <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Priority:</label>
+                <div class="col-sm-10">
+                    {{ form1.Priority }}
+                </div>
+            </div><br>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Resources Status:</label>
+                <div class="col-sm-10">
+                    {{ form1.r_status }}
+                </div>
+            </div>
+           
+            <div class="form-group row">
+                <div class="col-sm-12 text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+{% endblock img %}

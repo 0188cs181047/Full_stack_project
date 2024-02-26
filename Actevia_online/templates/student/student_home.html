@@ -1,0 +1,52 @@
+{% extends 'online/home.html' %}
+
+{% block title %}
+<title>Student home</title>
+{% endblock title %}
+<style>
+    #student{
+        margin: 0px;
+        padding: 0px;
+    }
+
+
+</style>
+
+
+{% block header %}
+{% include "online/navbar.html" %}
+{% endblock header %}
+
+
+
+{% block body %}
+<div class="container-fluid" id="student">
+
+    <br><br>
+    <div class="jumbotron">
+        <h1 class="display-4" id="hover">Hello Employee,</h1>
+        <p class="lead">and Welcome to Online Examination System</p>
+        <hr class="my-4">
+        <p>Select any of them to access into the system</p>
+        <p class="lead">
+            <a href="/student/student_signIn" class="btn btn-success"><i class="fa fa-sign-in" aria-hidden="true"></i>
+                SignIn</a>
+            <a href="/student/student_signUp" class="btn btn-primary"> <i class="fa fa-graduation-cap" aria-hidden="true"></i>SignUp</a>
+        </p>
+        <br><br><br><br><br><br>
+    </div>
+    
+</div>
+
+
+{% endblock body %}
+
+
+{% block contact %}
+{% endblock contact %}
+{% block other %}
+{% endblock other %}
+
+{% block footer %}
+{% include "online/footer.html" %}
+{% endblock %}

@@ -1,0 +1,203 @@
+{% extends 'student/student_base.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <style>
+    #countdown {
+      position: fixed;
+      right: 20px;
+      background-color: #17636a;
+      color: white;
+      padding: 3px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgb(102, 197, 232);
+      z-index: 9999;
+    }
+
+    #video {
+      position: fixed;
+      right: 20px;
+
+      box-shadow: 0 0 5px rgb(102, 197, 232);
+
+
+
+
+    }
+  </style>
+
+  <!-- <script>
+    window.addEventListener('beforeunload', function (e) 
+    { // Cancel the event    
+      e.preventDefault();
+      // Chrome requires returnValue to be set  
+      e.returnValue = '';});
+
+  </script> -->
+
+  <!-- <script type="text/javascript">
+    function openNewWindow(url) {
+      var options = 'resizable=yes,scrollbars=yes,status=yes,toolbar=yes,menubar=no,location=yes,fullscreen=yes';
+      window.open(url, 'newwindow', options);
+    }
+  </script> -->
+</head>
+
+
+<!-- <div class="jumbotron my-4">
+  <div id="countdown"></div>
+  <script> var countdownTime = 30;
+    function updateCountdown() {
+      countdownTime--;
+      document.getElementById("countdown").innerHTML = "Time: " + countdownTime + " sec";
+      if (countdownTime == 0) {
+        document.getElementById("submit-btn").click()
+      }
+    };
+
+    setInterval(updateCountdown, 1000);
+          // window.location.href = "/student/student_dashboard/"
+
+  </script> -->
+
+<div id="right">
+  <img video="video">
+
+  <body>
+    <div id="countdown"></div>
+    <script>//COUNT-DOWN TIME CODE FOR JAVASCRIPT
+      var countdownTime = 20;
+      function updateCountdown() {
+        countdownTime--;
+        document.getElementById("countdown").innerHTML = "Time Remaining : " + countdownTime + " Sec";
+        if (countdownTime == 0) {
+          document.getElementById("submit-btn").click();
+        }
+      };
+      setInterval(updateCountdown, 1000);
+    </script>
+    <!-- <h1>Video with countdown timer</h1> -->
+    <div id="countdown"></div>
+    <div id="po">
+      <canvas id="canvas"></canvas>
+      <video id="video" width="100" height="100" autoplay></video>
+      <canvas id="canvas" width="0" height="0"></canvas>
+    </div>
+
+
+
+    <script>
+      //COUNT-DOWN TIME    
+      function updateCountdown() {
+        countdownTime--;
+        if (countdownTime <= 0) {
+          clearInterval(timerInterval);
+          stopCamera();
+          document.getElementById("countdown").innerHTML = "Time's up!";
+        } 
+        else {
+          document.getElementById("countdown").innerHTML = "Remaining Time : " + countdownTime + " Sec";
+          // Clear the canvas before drawing the new time        
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          // Draw the remaining time on the canvas            
+        }
+      }
+
+      //WEB CAMERA CODE    
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    </script>
+
+    <form class="form" autocomplete="off" onsubmit="return saveAns()" action="/student/calculate_marks" method="POST"
+      id="question-form">
+      {% csrf_token %}
+      <h2 style="text-align: center;">Course: {{course.course_name}}</h2>
+      {% for q in questions%}
+      <div class="container-fluid"
+        style="width: 100%; height: 100%; font-size: 20px; font-weight: bold; margin: 10px; padding: 10px;">
+
+        <h3 class="text-danger">{{ forloop.counter }}. {{q.question}}</h3>
+        <h4 style="text-align: right;">[{{q.marks}} Marks]</h4>
+
+        <input type="hidden" name="csrfmiddlewaretoken"
+          value="C24rUotmdHawVQJL3KrqiWxvti8UffOFYUc8TRbZtLt36AVLdP3jbkzUVe3beRAa">
+
+
+        <div class="form-check mx-4">
+          <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option1}}" value="Option1">
+          <label class="form-check-label" for="option1">
+            {{q.option1}}
+          </label>
+        </div>
+
+
+        <div class="form-check mx-4">
+          <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option2}}" value="Option2">
+          <label class="form-check-label" for="option2">
+            {{q.option2}}
+          </label>
+        </div>
+
+
+        <div class="form-check mx-4">
+          <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option3}}" value="Option3">
+          <label class="form-check-label" for="option3">
+            {{q.option3}}
+          </label>
+        </div>
+
+
+        <div class="form-check mx-4">
+          <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option4}}" value="Option4">
+          <label class="form-check-label" for="option4">
+            {{q.option4}}
+          </label>
+        </div>
+      </div>
+
+
+
+      {% endfor %}
+      <input class="btn btn-success btn-lg" style="border-radius: 0%;" type="submit" id="submit-btn"
+        value="Submit Answers">
+    </form>
+</div>
+
+<script>
+  function saveAns() {
+
+    var ele = document.getElementsByTagName('input');
+    for (i = 0; i < ele.length; i++) {
+      if (ele[i].type = "radio") {
+        if (ele[i].checked) {
+          setCookie(ele[i].name, ele[i].value, 3)
+        }
+      }
+    }
+
+  }
+
+  function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+</script>
+
+<!-- <a href="/student/thanks" target="_blank" onclick="window.open('{{ link_url }}', 'newwindow', 'resizable=yes,scrollbars=yes,status=yes,toolbar=yes,menubar=no,location=yes,fullscreen=yes'); return false;">Open link in new window</a> -->
+
+
+<br><br><br><br><br><br>
+{% endblock content %}

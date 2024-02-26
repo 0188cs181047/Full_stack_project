@@ -1,0 +1,21 @@
+{% extends 'post/home.html' %}
+{% block body %}
+
+<div class="video-player">
+    {% if video.video_file%}
+    <video width="640" height="360" controls preload="auto" id="my-video" poster="{{ post.posti.url }}" class="plyr">
+      <source src="{{ video.video_file.url }}" type="video/mp4">
+    </video>
+    {{video.user}}
+    {% else %}
+    no video here
+    {% endif %}
+    </video>
+
+  </div>
+  <h5>Title : {{video.title}}</h5>
+  
+
+{% endblock body %}
+
+{% block qr %}{% endblock qr %}

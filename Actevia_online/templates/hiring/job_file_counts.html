@@ -1,0 +1,134 @@
+{% extends "hiring/home.html" %}
+{% comment %} {% load static %}
+
+{% block img %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+<div class="mdc-card">
+  <h1 align="center">Recruitment Analysis</h1><br>
+  <table class="table table-hover table-bordered border-primary">
+    <tr align="center">
+        <th>Job ID</th>
+        <th>Resume Count</th>
+        <th>View Files</th>
+    </tr>
+    <tbody>
+      {% for job in job_file_counts %}
+      <tr>
+         <td style="text-align: center;">{{ job.job_id__job_id }}</a></td>
+         <td style="text-align: center;">{{ job.count }}</td>
+         <td style="text-align: center;"><a href="{% url 'resource_list' job_id=job.job_id__id %}">View Files</a></td>
+      </tr>
+ {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  <center><button class="btn btn-danger "><a href="/hiring/upload" style="text-decoration: none; color: white;">Add New Record</a></button></center>
+  <br>
+  </div>
+  </div>
+{% if job_file_counts.has_other_pages %}
+    <div class="pagination">
+        <span class="step-links">&nbsp;&nbsp;&nbsp;
+            {% if job_file_counts.has_previous %}
+                <button class="btn btn-info" btn-space><a href="?page=1" style="text-decoration: none; color: white;">&laquo; First</a></button>
+                <button class="btn btn-info" btn-space><a href="?page={{ job_file_counts.previous_page_number }}" style="text-decoration: none; color: white;">Previous</a></button>
+            {% endif %}
+
+            &nbsp;&nbsp;&nbsp;<span class="current-page">
+                Page {{ job_file_counts.number }} of {{ job_file_counts.paginator.num_pages }}.
+            </span>
+            
+            {% if job_file_counts.has_next %}
+                <button class="btn btn-info" btn-space><a href="?page={{ job_file_counts.next_page_number }}" style="text-decoration: none; color: white;">Next</a></button>
+                <button class="btn btn-info" btn-space><a href="?page={{ job_file_counts.paginator.num_pages }}" style="text-decoration: none; color: white;">Last &raquo;</a></button>
+            {% endif %}
+        </span>
+    </div>
+{% endif %}
+
+  
+<br>
+
+{% endblock img %} {% endcomment %}
+
+{% block img %}
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+
+  
+  <div class="mdc-card py-2">
+      <div class="d-flex justify-content-between align-items-center">
+          <h4 class="card-title mb-0">Recruitment Analysis</h4>
+          
+          <div class="text-start">
+              {% comment %} {% if request.user.is_authenticated %} {% endcomment %}
+              {% if user.is_staff or user.is_superuser %}
+              <a href="/hiring/upload">
+                <button class="mdc-button mdc-button--raised mdc-ripple-upgraded btn-sm" id="create_new"><i class="material-icons mdc-button__icon">add</i><span> Add New Record</span></button>
+              </a>&nbsp;
+             
+              
+              {% else %}
+              {% comment %} <a href="/cridential/login"><button type="button" class="btn btn-outline-success">Please Login</button></a> {% endcomment %}
+              {% endif %}
+          </div>
+          
+          
+      </div>
+  </div>
+</div>
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+    <div class="mdc-card">
+      <form method="get">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <colgroup>
+                    <col width="35%">
+                    <col width="30">
+                    <col width="35%">
+                </colgroup>
+                <thead >
+                <tr>
+                  <th class="text-center py-1">Job ID</th>
+                  <th class="text-center py-1">Resume Count</th>
+                  <th class="text-center py-1">View Files</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                    {% for job in job_file_counts %}
+                    <tr>
+                        <td class="px-2 py-1 text-center">{{ job.job_id__job_id }}</td>
+                        <td class="px-2 py-1 text-center">{{ job.count }}</td>
+                        <td class="px-2 py-1 text-center"><a href="{% url 'resource_list' job_id=job.job_id__id %}">View Files</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if job_file_counts.has_other_pages %}
+    <div class="pagination">
+        <span class="step-links">&nbsp;&nbsp;&nbsp;
+            {% if job_file_counts.has_previous %}
+                <button class="btn btn-info" btn-space><a href="?page=1" style="text-decoration: none; color: white;">&laquo; First</a></button>
+                <button class="btn btn-info" btn-space><a href="?page={{ job_file_counts.previous_page_number }}" style="text-decoration: none; color: white;">Previous</a></button>
+            {% endif %}
+
+            &nbsp;&nbsp;&nbsp;<span class="current-page">
+                Page {{ job_file_counts.number }} of {{ job_file_counts.paginator.num_pages }}.
+            </span>
+            
+            {% if job_file_counts.has_next %}
+                <button class="btn btn-info" btn-space><a href="?page={{ job_file_counts.next_page_number }}" style="text-decoration: none; color: white;">Next</a></button>
+                <button class="btn btn-info" btn-space><a href="?page={{ job_file_counts.paginator.num_pages }}" style="text-decoration: none; color: white;">Last &raquo;</a></button>
+            {% endif %}
+        </span>
+    </div>
+{% endif %}
+</span>
+        </div>
+      </form>
+    </div>
+</div>
+{% endblock img %} 

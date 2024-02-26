@@ -1,0 +1,17 @@
+{% extends "hiring/home.html" %}
+
+{% block img %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">  
+  <div class="mdc-card py-2">
+  <h2>Delete File</h2>
+  <p>Are you sure you want to delete this file?</p>
+  <p><strong>Job ID:</strong> {{ file.job_id }}</p>
+  <p><strong>File:</strong> {{ file.file.name }}</p>
+  <form method="POST" action="{% url 'delete_file' file_id=file.id %}">
+    {% csrf_token %}
+    <input type="submit" value="Delete" class="btn btn-danger">
+    <a href="/hiring/delete_file/{{file.file_id}}" class="btn btn-secondary">Cancel</a>
+  </form>
+  </div>
+  </div>
+{% endblock img %}

@@ -1,0 +1,70 @@
+#color{
+    margin: 0px;
+    padding: 10px;
+    background-color: whitesmoke;
+}
+#color #all_data{
+    padding-left: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+}
+
+#color #all_data #card1{
+    margin: 10px;
+    padding: 10px;
+}
+
+#color #all_data #card2{
+    margin: 10px;
+    padding: 10px;
+}
+
+#color #all_data #card1 h5:hover{
+    
+    font-weight: bold;
+    color:green;
+
+}
+#color #all_data #card2 h5:hover{
+    
+    font-weight: bold;
+    color:green;
+
+}
+#color #all_data #card1 li{
+    
+    font-weight: bold;
+    
+
+}
+#color #all_data #card2 li{
+    
+    font-weight: bold;
+    
+
+}
+#color #all_data #card2 .card{
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+#color #all_data #card2 .card:hover{
+    
+    box-shadow: 9px 7px 9px rgba(0, 0, 0, 0.2);
+
+}
+
+#color #all_data #card1 .card{
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+#color #all_data #card1 .card:hover{
+    
+    box-shadow: 9px 7px 9px rgba(0, 0, 0, 0.2);
+
+}
+
+
+
+
+
+
+

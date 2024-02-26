@@ -1,0 +1,22 @@
+{% extends 'policy/base.html' %}
+
+{% block policy %}
+
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <br><br><br>
+<div class="mdc-card">
+  <div class="mdc-card" style="background-color: #7a00ff; color: white; text-align:center">
+    <h1 class="card-title mb-0" style=" color:darkblue text-align: center; font-weight: bold;">Add Policy</h1>
+  </div>
+  <div class="card-body">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+  </div>
+</div>
+<br><br>
+</div>
+
+    {% endblock %}

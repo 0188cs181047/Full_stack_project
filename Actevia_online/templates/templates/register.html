@@ -1,0 +1,197 @@
+{% extends 'home.html' %}
+{% block policy %}
+
+
+
+<!-- <div class="container">
+    <br>
+<form method="post">
+    {% csrf_token %}
+    {% if form.errors %}
+        <p class="error-message">Please correct the following errors:</p>
+    {% endif %}
+    
+    <div class="form-group">
+        <label for="id_generate_password">Password Generation:</label>
+        <br><hr>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="generate_password" id="id_generate_password_manual" value="manual" checked>
+            <label class="form-check-label" for="id_generate_password_manual">Enter Password Manually</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="generate_password" id="id_generate_password_auto" value="auto">
+            <label class="form-check-label" for="id_generate_password_auto">Generate Password Automatically</label>
+        </div>
+    </div>
+    <br>
+    
+    <div id="manual-password-fields">
+        {{ form.username.errors }}
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Username:</label>
+            {{ form.username }}
+        </div>
+        {{ form.email.errors }}
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email:</label>
+            {{ form.email }}
+        </div>
+        {{ form.password1.errors }}
+        <div class="form-group">
+            <label for="{{ form.password1.id_for_label }}">Password:</label>
+            {{ form.password1 }}
+        </div>
+        {{ form.password2.errors }}
+        <div class="form-group">
+            <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+            {{ form.password2 }}
+        </div>
+        {{ form.is_active.errors }}
+        <div class="form-group">
+            <label for="{{ form.is_active.id_for_label }}">Active:</label>
+            {{ form.is_active }}
+        </div>
+        {{ form.is_staff.errors }}
+        <div class="form-group">
+            <label for="{{ form.is_staff.id_for_label }}">Staff:</label>
+            {{ form.is_staff }}
+        </div>
+    </div>
+    
+    <div id="auto-password-fields" style="display: none;">
+        {{ form.username_auto.errors }}
+        <div class="form-group">
+            <label for="{{ form.username_auto.id_for_label }}">Username:</label>
+            <input type="text" name="{{ form.username_auto.name }}" placeholder="Username" class="form-control">
+        </div>
+        {{ form.email_auto.errors }}
+        <div class="form-group">
+            <label for="{{ form.email_auto.id_for_label }}">Email:</label>
+            <input type="email" name="{{ form.email_auto.name }}" placeholder="Email" class="form-control">
+        </div>
+        {{ form.is_active_auto.errors }}
+        <div class="form-group">
+            <label for="{{ form.is_active_auto.id_for_label }}">Active:</label>
+            <input type="checkbox" name="{{ form.is_active_auto.name }}" checked class="form-check-input">
+        </div>
+        {{ form.is_staff_auto.errors }}
+        <div class="form-group">
+            <label for="{{ form.is_staff_auto.id_for_label }}">Staff:</label>
+            <input type="checkbox" name="{{ form.is_staff_auto.name }}" class="form-check-input">
+        </div>
+    </div>
+    
+    
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const manualPasswordFields = document.getElementById('manual-password-fields');
+        const autoPasswordFields = document.getElementById('auto-password-fields');
+        const generatePasswordRadioManual = document.getElementById('id_generate_password_manual');
+        const generatePasswordRadioAuto = document.getElementById('id_generate_password_auto');
+        
+        generatePasswordRadioManual.addEventListener('change', function() {
+            if (generatePasswordRadioManual.checked) {
+                manualPasswordFields.style.display = 'block';
+                autoPasswordFields.style.display = 'none';
+            }
+        });
+
+        generatePasswordRadioAuto.addEventListener('change', function() {
+            if (generatePasswordRadioAuto.checked) {
+                manualPasswordFields.style.display = 'none';
+                autoPasswordFields.style.display = 'block';
+            }
+        });
+    });
+</script>
+</div> -->
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto mt-4">
+            <div class="card">
+                <div class="card-header bg-secondary text-white text-center">
+                    <h4>User Registration</h4>
+                </div>
+                <div class="card-body">
+
+                    {% if error_message %}
+                    {% if 'Username' in error_message %}
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Custom user with this Username already exists.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    {% endif %}
+                    
+                    {% if 'Email' in error_message %}
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Custom user with this Email already exists.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                  
+
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{ form.username.id_for_label }}">Username</label>
+                            {{ form.username }}
+                            <div class="invalid-feedback">
+                                Please choose a username.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}">Email</label>
+                            {{ form.email }}
+                            <div class="invalid-feedback">
+                                Please provide a valid email address.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.app_name.id_for_label }}">App Name</label>
+                            {{ form.app_name }}
+                        </div>
+                        <div class="form-check">
+                            {{ form.is_active }}
+                            <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Active</label>
+                        </div>
+                        <div class="form-check">
+                            {{ form.is_staff }}
+                            <label class="form-check-label" for="{{ form.is_staff.id_for_label }}">Staff</label>
+                        </div>
+
+                        <div class="form-check">
+                            {{ form.generate_password }}
+                            <label class="form-check-label" for="{{ form.generate_password.id_for_label }}">Generate Password</label>
+                        </div>
+                        <br>
+
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% if email_exists %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="emailExistsAlert">
+            The email address you entered already exists. Please choose another email address or log in with your existing account.
+        </div>
+    {% endif %}
+
+
+  
+
+{% endblock policy %}

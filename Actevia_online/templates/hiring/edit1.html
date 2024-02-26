@@ -1,0 +1,22 @@
+{% extends "hiring/home.html" %}
+{% load static %}
+
+{% block img %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <br><br>
+<div class="mdc-card">
+  <div class="card-header bg-dark text-center text-white">
+    <h3 class="mb-0">Update Details</h3>
+  </div>
+  <div class="card-body">
+    <form method="POST" class="post-form" action="" >
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success btn-lg mt-3">Update</button>
+    </form>
+  </div>
+</div>
+<br><br>
+</div>
+{% endblock img %}
+

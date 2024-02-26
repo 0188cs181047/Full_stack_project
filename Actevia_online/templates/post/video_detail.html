@@ -1,0 +1,174 @@
+{% extends 'post/home.html' %}
+{% load static %}
+{% block body %}
+{% comment %} <video width="640" height="360" controls>
+    <source src="{{ video.video_file.url }}" type="video/mp4">
+  </video>
+  <h1>{{ video.title }}</h1>
+  <p>{{ video.description }}</p>
+  <p>{{ video.created_at}}</p> 
+
+
+  <a href="{% url 'download_video' pk=video.pk %}">Download Video</a>
+
+
+<form method="post" action="{% url 'video_detail' video.pk %}">
+  {% csrf_token %}
+  {{ form.as_p}}
+  <button type="submit" >submit</button>
+</form> {% endcomment %}
+
+
+<div class="container">
+  <div class="video-player">
+    {% if video.video_file%}
+    <video width="100" height="100" controls preload="auto" id="my-video" poster="{{ post.posti.url }}" class="plyr">
+      <source src="{{ video.video_file.url }}" type="video/mp4">
+    </video>
+    {{video.user}}
+    {% else %}
+    no video here
+    {% endif %}
+    </video>
+
+  </div>
+  <div class="video-details">
+    <h1>{{ video.title }}</h1>
+
+
+    <div class="container" id="like">
+      <form method="POST" action="{% url 'like' pk=video.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="like_id" value="{{ video.id }}">
+        <button type="submit" class="btn btn-light {% if request.user in video.liked.all %}active{% endif %}">
+          
+          {% if request.user in video.liked.all %}
+           <button class="btn btn-danger">Liked {{video.liked.all.count}}</button> 
+           <!-- <i class="fa fa-thumbs-o-up" aria-hidden="true">hiii</i> -->
+          {% else %}
+          <button class="btn btn-success">Like {{video.liked.all.count}}</button> 
+          {% endif %}
+        </button>
+    
+      </form>
+
+    </div>
+    <a href="{% url 'download_video' pk=video.pk %}">Download Video</a>
+<hr>
+
+    <div class="description-container">
+      <p class="description">{{ video.description }}</p>
+      <a href="#" class="toggle-description">Show More</a>
+    </div>
+  </div>
+  <hr>
+  <div class="comment-form">
+
+
+    <h3>Add a Comment 
+    </h3>
+    <form method="post" ,action="{% url 'detail_video' pk=video.id %}" >
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Post Comment</button>
+    </form>
+    
+  </div>
+  <hr>
+
+  <div class="comments">
+   <h3>{{ video.comment_count }} Comment</h3>
+   {% comment %} <p>Views: {{ video.views }}</p {% endcomment %}
+{% for comment in comment%}
+    <div class="comment">
+        <p>{{ video.user }} - {{ comment.timestamp }}</p>
+        <p>{{ comment.content }}</p>
+        
+        
+
+        <a href="{% url 'delete_comment' pk=comment.pk %}">Delete comment</a>
+
+        <form method="POST" action="{% url 'reply_comment' pk=comment.pk %}">
+            {% csrf_token %}
+            <textarea name="text" placeholder="Write a reply..."></textarea>
+            <button type="submit">Reply</button>
+        </form>
+        <h6>{{comment.count_reply}} Reply</h6>
+
+        {% for reply in comment.replies.all %}
+            <div class="reply">
+                <p>{{ reply.text }}</p>
+                <small>Posted by {{ reply.author }} on {{ reply.created_date }}</small>
+            </div>
+           
+            
+        {% endfor %} 
+    </div>
+{% empty %}
+    <p>No comments yet.</p>
+
+{% endfor %}
+  </div>
+  <hr>
+ 
+  
+</div>
+
+
+
+
+
+
+
+
+<script src="https://cdn.plyr.io/3.6.4/plyr.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const video = document.querySelector('.plyr');
+      const previewUrl = '{{ post.posti.url }}';
+
+      const player = new Plyr(video, {
+        previewThumbnails: {
+          enabled: true,
+          src: previewUrl,
+        },
+      });
+    });
+  </script>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.4/plyr.css">
+ 
+{% endblock body %}
+
+{% block qr %}
+
+<a href="{% url 'qr_code' video.pk %}">
+  <img src="{% static 'image/q1.png' %}" alt="QR code">
+  
+  
+</a>
+
+
+<script>
+    let textarea = document.getElementById("id_content");
+    let usernameList = document.getElementById("username-list");
+
+    textarea.addEventListener("input", function() {
+      let text = textarea.value;
+      let matches = text.match(/@(\w+)/g);
+      if (matches) {
+        let usernames = matches.map(match => match.substring(1));
+        usernameList.innerHTML = "";
+        usernames.forEach(function(username) {
+          let li = document.createElement("li");
+          li.textContent = username;
+          usernameList.appendChild(li);
+        });
+      } else {
+        usernameList.innerHTML = "";
+      }
+    });
+  </script>
+
+<ul id="suggestions"></ul>
+
+{% endblock qr %}

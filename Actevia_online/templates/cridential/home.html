@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Exo:700');
+@import url('https://fonts.googleapis.com/css?family=Abel');
+body {
+  background-color: #dfe6e9;
+  /* -webkit-transform: perspective(900px);
+  -webkit-transform-style: preserve-3d; */
+}
+.title{
+  width:100%;
+  text-align: center;
+}
+.title h1{
+  font-size:50px;
+  font-family: 'Exo', sans-serif;
+}
+.card1 {
+  text-align:center;
+  position: absolute;
+  left: 100px;
+  width: 250px;
+  height: 350px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(rgb(225,150,58),rgb(227,144,91));
+  transition:.6s;
+  
+  transform: rotatex(75deg) translatey(-200px) translatez(-100px);
+  box-shadow: 0px 20px 60px rgba(0,0,0, 0.5);
+}
+.card1:hover{
+  transform: rotatex(0deg);
+  transform: rotatez(0deg);
+  transition:.6s;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+}
+.card1 img{
+  transform: translateY(15px);
+  width:200px;
+  height:120px;
+}
+h3{
+  font-size:35px;
+  font-family: 'Abel', sans-serif;
+  color:rgb(255,255,255);
+  text-shadow: 0 0 2px rgb(255,255,255);
+  transform: translatey(10px);
+  margin: 20px;
+}
+
+p{
+  
+  font-family: 'Abel', sans-serif;
+  color: white;
+  text-align:center;
+  width:220px;
+  transform: translatex(12px);
+}
+
+
+.card2 {
+  text-align:center;
+  position: absolute;
+  left: 482px;
+  width: 250px;
+  height: 300px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(rgb(240, 220, 8),rgb(165, 153, 27));
+  animation: animate 1s linear infinite;
+  transition:.6s;
+  
+  transform: rotatex(75deg) translatey(-200px) translatez(-100px);
+  box-shadow: 0px 20px 60px rgba(0, 0, 0, 0.5);
+}
+.card2:hover{
+   transform: rotatex(0deg);
+  transition:.6s;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+}
+.card2 img{
+  transform: translateY(15px);
+  width:180px;
+  height:250px;
+}
+.card3 {
+  text-align:center;
+  position: absolute;
+  left: 1000px;
+  width: 250px;
+  height: 350px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: linear-gradient(#ff5252, #b33939);
+  transition:.6s;
+  
+  transform: rotatex(75deg) translatey(-200px) translatez(-100px);
+  box-shadow: 0px 20px 60px rgba(0, 0, 0, 0.5);
+}
+.card3:hover{
+   transform: rotatex(0deg);
+  transition:.6s;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+}
+.card3 img{
+  transform: translateY(15px);
+  width:200px;
+  height:120px;
+}
+.footer{
+  position: absolute;
+  top: 500px;
+  margin: 10px;
+  width: 100%;
+   text-align: center;
+}
+.footer h2{
+  font-size:18px;
+  font-family: 'Exo', sans-serif;
+  
+}
+    </style>
+  </head>
+  <body>
+{% include "cridential/nav.html" %}
+  {% block policy %}
+  <div class="container" style="text-align: center;">
+    <br><br>
+    <!-- <a href="/policy_list">
+    <div class="card text-center" style="width: 18rem; display: inline-block; margin-top: 10%;">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+      </a> -->
+      <div class="title">
+        <h1><span style="color: #ff9f43">O</span><span style="color: #0abde3">R</span></span><span style="color: #5f27cd">G<span></h1>
+      </div>
+      <!-- <div class="card1">
+        <img src="http://www.pngmart.com/files/5/Pyramids-PNG-HD.png" alt="">
+        <h3>Pyramids</h3>
+        <p>The Egyptian pyramids are ancient pyramid-shaped masonry structures located in Egypt. As of November 2008, sources cite either 118 or 138 as the number of identified Egyptian pyramids.</p>
+      </div> -->
+      <a href="/policy_list">
+        <div class="card2">
+        
+          <!-- <img src="https://emeraldcomputers.com/wp-content/uploads/2019/11/policies-cliparts-139474-6065618.jpg" alt="Eiffel Tower"> -->
+          <img src="data:image/jpeg;base64,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" alt="Eiffel Tower">
+        
+        
+       
+          <!-- <p>The Statue of Liberty is a colossal neoclassical sculpture on Liberty Island in New York Harbor in New York City, in the United States.</p> -->
+        </div>
+      </a>
+     
+      
+      <!-- <div class="card3">
+        <img src="http://pluspng.com/img-png/download-taj-mahal-png-images-transparent-gallery-advertisement-1185.png" alt="">
+        <h3>Taj Mahal</h3>
+        <p>The Taj Mahal is an ivory-white marble mausoleum on the south bank of the Yamuna river in the Indian city of Agra. It was commissioned in 1632 by the Mughal emperor.</p>
+      </div> -->
+      <div class="footer">
+      </div>
+</div>
+
+
+
+  {% endblock policy %}
+    
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    
+    -->
+
+    
+  </body>
+</html>

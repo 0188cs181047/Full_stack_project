@@ -1,0 +1,77 @@
+{% extends 'post/home.html' %}
+{% block body %}
+
+<br><br>
+
+<form method="get">
+  <center>
+    <label for="q"></label>
+    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search......">
+    <button type="submit">@</button>
+  </center>
+
+</form>
+
+<br><br>
+
+</div>
+
+<div class="videos">
+
+  {% for video in video %}
+
+  <div class="video">
+    <div class="thumbnail">
+    <a href="{% url 'admin_see_video' pk=video.id %}"  >
+      {% if video.posti %}
+        <img src="{{video.posti.url}}" alt="{% url 'detail_video' pk=video.id %}" class="post-image" data-video="{{ post.video_file.url }}">
+        {% else %}
+        no image/
+
+        {% endif %}
+     </a>
+
+    </div>
+
+    <div class="details">
+      <div class="author">
+        
+      </div>
+      <div class="title">
+       <a href="{% url 'detail_video' pk=video.id %}"> 
+          <h3>{{ video.title }}</h3>
+        </a>
+        {% comment %} <span> 2M Views • 3 Months Ago </span> {% endcomment %}
+      </div>
+      
+    </div>
+
+  </div>
+
+
+
+
+
+  {% endfor %}
+</div>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.post-image').mouseover(function() {
+        var videoUrl = $(this).data('video');
+        var videoPlayer = $('<video controls autoplay><source src="' + videoUrl + '"></video>');
+        $('.post').append(videoPlayer);
+      });
+
+      $('.post-image').mouseout(function() {
+        $('video').remove();
+      });
+    });
+  </script>
+
+{% endblock body %}
+{% block qr %}{% endblock qr %}

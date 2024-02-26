@@ -1,0 +1,35 @@
+{% extends 'online/admin_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ 
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+  a:link {
+        text-decoration: none;
+      }
+    
+  </style>
+</head>
+<h3 style="text-align:center">Please Approve User <b> {{teacher.user}}</b></h3>
+<form method="POST" autocomplete="off" style="margin:100px;margin-top: 0px;">
+    {%csrf_token%}
+    <div class="form-group">
+  
+      {% render_field teacherSalary.salary class="form-control" placeholder="3660" %}
+    </div>
+    <p style="display: contents;"> Lorem ipsum dolor sit,<b> User Name : {{teacher.user}}</b> amet consectetur adipisicing elit. Ea omnis,<b>User Email is : {{teacher.user.email}}</b> voluptatibus velit pariatur odit,<b> User Phone Nomber is : {{teacher.mobile}}</b>  at saepe, odio deleniti rem veritatis rerum eos provident molestiae repellendus ratione nihil quia? Atque, <b> User Address is : {{teacher.address}}</b>  fuga?</p>
+<br>
+<br>
+    <button type="submit" class="btn btn-success">Approve</button>
+  </form>
+<br><br><br>
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% extends 'fixed/home.html' %}
+
+{% block img %}
+<div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+  <div class="mdc-card">
+    <div class="card-header  text-white" style="background-color: #7a00ff;">
+      <h1 class="my-0">Create Asset</h1>
+    </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary" style="background-color: #7a00ff;">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock img %}

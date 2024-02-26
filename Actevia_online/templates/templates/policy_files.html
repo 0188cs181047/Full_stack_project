@@ -1,0 +1,126 @@
+{% extends 'home.html' %}
+
+{% block policy %}
+<head>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js"></script>
+
+    <style>
+        #pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<div class="container" >
+    <br>
+
+    <br>
+    <div class="container-fluid">
+        {% if user.is_authenticated %}
+        <div class="container-fluid">
+            {% if uploads %}
+                {% for upload in uploads %}
+                <a href="{{ upload.file.url }}" download="{{ upload.file.name }}" target="_blank">
+                    <button type="button" class="btn btn-outline-dark">Download</button>
+                </a>
+                {% endfor %}
+            {% else %}
+                <p>No files uploaded for this policy.</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>You need to be logged in to access the download button.</p>
+    {% endif %}
+    </div>
+    <br>
+    <div class="row">
+
+
+        <div class="col-sm-12">
+            <div class="card">
+
+                <div class="card-header" style="text-align: center; font-weight: bold;">
+                    <em>{{ policy.policy_name }}</em>
+                  </div>
+
+                  <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        {% if uploads %}
+                        {% for upload in policy.upload_files.all %}
+                        <div id="pdf-viewer"></div>
+                        <script>
+                            
+                            var url = '{{ upload.file.url }}';
+                            var pdfjsLib = window['pdfjs-dist/build/pdf'];
+                            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
+                            var loadingTask = pdfjsLib.getDocument(url);
+                            loadingTask.promise.then(function(pdf) {
+                                console.log('PDF loaded');
+                                var numPages = pdf.numPages;
+                                console.log(numPages);
+                                var scale = 1.8;                        
+                                for (var i = numPages; i >= 1; i--) {
+                                    pdf.getPage(i).then(function(page) {
+                                        console.log('Page loaded');
+                                        var viewport = page.getViewport({ scale: scale, textLayer: true });
+                                        var canvas = document.createElement('canvas');
+                                        canvas.style.display = 'block';
+                                        canvas.style.margin = 'auto';
+                                        canvas.width = viewport.width;
+                                        canvas.height = viewport.height;
+                                        var context = canvas.getContext('2d');
+                                        var renderContext = {
+                                            canvasContext: context,
+                                            viewport: viewport,
+                                        };
+                                        page.render(renderContext).promise.then(function() {
+                                            console.log('Page rendered');
+                                            document.getElementById('pdf-viewer').appendChild(canvas);
+                                        });
+                                    });
+                                }
+                            }, function(reason) {
+                                console.error(reason);
+                            });
+                        </script>
+                        {% endfor %}
+                        {% else %}
+                        <p>No files uploaded for this policy.</p>
+                        {% endif %}
+                      
+                    </blockquote>
+                  </div>
+
+
+                
+            </div>
+        </div>
+    </div>
+
+<script>
+const downloadLinks = document.querySelectorAll('a[href$=".pdf"][download]');
+downloadLinks.forEach(link => {
+    link.addEventListener('click', event => {
+        event.preventDefault();
+        const fileUrl = link.getAttribute('href');
+        const fileName = link.getAttribute('download');
+        fetch(fileUrl)
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+    });
+});
+</script>
+</div>
+{% endblock %}
